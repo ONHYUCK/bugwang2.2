@@ -1,0 +1,17 @@
+[build]
+  base = "frontend"
+  command = "npm install && npm run build"
+  publish = "dist"
+
+# SPA 새로고침 404 방지
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# API 프록시 (프로덕션용)
+[[redirects]]
+  from = "/api/*"
+  to = "https://<백엔드-도메인 또는 IP>/:splat"
+  status = 200
+  force = true
