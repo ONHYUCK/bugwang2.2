@@ -4401,7 +4401,7 @@
                                 ${conflict.stakeholders
                                   ?.map(
                                     (s) => `
-                                    <option value="${s.name}">${s.name} (${s.type})</option>
+                                    <option value="${s.nameKey || s.name || '이해관계자'}">${s.nameKey || s.name || '이해관계자'} (${s.type})</option>
                                 `
                                   )
                                   ?.join("") || '<option value="">이해관계자 정보가 없습니다.</option>'}
