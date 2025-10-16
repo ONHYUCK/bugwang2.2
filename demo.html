@@ -345,11 +345,135 @@
         height: 300px;
       }
 
+      .voting-summary {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: rgba(30, 41, 59, 0.2);
+        border-radius: 8px;
+        border: 1px solid rgba(148, 163, 184, 0.1);
+      }
+
+      .summary-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+        padding: 0.5rem;
+      }
+
+      .summary-label {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        font-weight: 500;
+        margin-bottom: 0.25rem;
+      }
+
+      .summary-value {
+        color: #f1f5f9;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      .voting-history {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .voting-case {
+        background: rgba(30, 41, 59, 0.3);
+        border: 1px solid rgba(148, 163, 184, 0.1);
+        border-radius: 12px;
+        padding: 1.25rem;
+        transition: all 0.2s ease;
+      }
+
+      .voting-case:hover {
+        background: rgba(30, 41, 59, 0.5);
+        border-color: rgba(148, 163, 184, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .case-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .case-header h4 {
+        color: #f1f5f9;
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .date-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .voting-date {
+        color: #94a3b8;
+        font-size: 0.75rem;
+        font-weight: 500;
+      }
+
+      .next-voting-date {
+        color: #60a5fa;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+
+      .case-details p {
+        color: #cbd5e1;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin: 0 0 0.75rem 0;
+      }
+
+      .voting-values {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .value-tag {
+        padding: 0.25rem 0.75rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: white;
+      }
+
+      .value-tag.environment {
+        background: rgba(34, 197, 94, 0.8);
+      }
+
+      .value-tag.economic {
+        background: rgba(249, 115, 22, 0.8);
+      }
+
+      .value-tag.residential {
+        background: rgba(99, 102, 241, 0.8);
+      }
+
+      .value-tag.cultural {
+        background: rgba(6, 182, 212, 0.8);
+      }
+
+      .value-tag.traffic {
+        background: rgba(239, 68, 68, 0.8);
+      }
+
       /* Detail Modal */
       .modal {
         display: none;
         position: fixed;
-        z-index: 2000;
+        z-index: 9999;
         left: 0;
         top: 0;
         width: 100%;
@@ -661,6 +785,7 @@
       }
 
       .chart-item {
+        position: relative;
         background: rgba(15, 23, 42, 0.5);
         border: 1px solid rgba(148, 163, 184, 0.2);
         border-radius: 12px;
@@ -674,34 +799,53 @@
         font-weight: 600;
       }
 
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
       .stakeholder-legend {
         display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-bottom: 1rem;
-        justify-content: flex-end;
+        gap: 0.75rem;
+        align-items: center;
       }
 
       .stakeholder-toggle {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        padding: 0.375rem 0.75rem;
-        background: rgba(148, 163, 184, 0.2);
-        border: 1px solid rgba(148, 163, 184, 0.3);
-        border-radius: 6px;
+        padding: 0.5rem 1rem;
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 8px;
         cursor: pointer;
-        transition: all 0.2s ease;
+        transition: all 0.3s ease;
         user-select: none;
+        min-width: 100px;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #e2e8f0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
       }
 
       .stakeholder-toggle:hover {
-        background: rgba(148, 163, 184, 0.3);
-        transform: translateY(-1px);
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(147, 51, 234, 0.2));
+        border-color: rgba(59, 130, 246, 0.5);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       }
 
       .stakeholder-toggle.inactive {
         opacity: 0.4;
-        background: rgba(148, 163, 184, 0.1);
+        background: linear-gradient(135deg, rgba(148, 163, 184, 0.05), rgba(148, 163, 184, 0.1));
+        border-color: rgba(148, 163, 184, 0.2);
+        color: #94a3b8;
+        transform: none;
+        box-shadow: none;
       }
 
       .stakeholder-toggle.inactive:hover {
@@ -1336,10 +1480,80 @@
                 <canvas id="valueChangesChart"></canvas>
               </div>
             </div>
+
+            <!-- 나의 투표 참여 사례 -->
+            <div class="dashboard-card" style="grid-column: 1 / -1">
+              <h3 data-i18n="dashboard.votingParticipation">나의 투표 참여 사례</h3>
+              
+              <!-- 투표 현황 요약 -->
+              <div class="voting-summary">
+                <div class="summary-item">
+                  <span class="summary-label" data-i18n="dashboard.totalParticipation">총 참여 횟수:</span>
+                  <span class="summary-value">3<span data-i18n="dashboard.times">회</span></span>
+                </div>
+                <div class="summary-item">
+                  <span class="summary-label" data-i18n="dashboard.activeConflicts">활성 갈등:</span>
+                  <span class="summary-value">3<span data-i18n="dashboard.cases">개</span></span>
+                </div>
+              </div>
+
+              <div class="voting-history">
+                <div class="voting-case">
+                  <div class="case-header">
+                    <h4 data-i18n="dashboard.songdoConflict">송도 국제도시 개발 갈등</h4>
+                    <div class="date-info">
+                      <span class="voting-date" data-i18n="dashboard.august15">2024년 8월 15일</span>
+                      <span class="next-voting-date">→ <span data-i18n="dashboard.september15">2024년 9월 15일</span> (15<span data-i18n="dashboard.daysLater">일 후</span>)</span>
+                    </div>
+                  </div>
+                  <div class="case-details">
+                    <p data-i18n="dashboard.songdoDescription">송도 신도시 개발 과정에서 환경보호와 경제발전 간의 가치 충돌이 발생했습니다.</p>
+                    <div class="voting-values">
+                      <span class="value-tag environment"><span data-i18n="dashboard.environment">환경</span>: 8<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag economic"><span data-i18n="dashboard.economic">경제</span>: 6<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag residential"><span data-i18n="dashboard.residential">주거</span>: 7<span data-i18n="dashboard.points">점</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="voting-case">
+                  <div class="case-header">
+                    <h4 data-i18n="dashboard.incheonPortConflict">인천항 확장 프로젝트</h4>
+                    <div class="date-info">
+                      <span class="voting-date" data-i18n="dashboard.july10">2024년 7월 10일</span>
+                      <span class="next-voting-date">→ <span data-i18n="dashboard.august10">2024년 8월 10일</span> (<span data-i18n="dashboard.nextVotingAvailable">투표 가능</span>)</span>
+                    </div>
+                  </div>
+                  <div class="case-details">
+                    <p data-i18n="dashboard.incheonPortDescription">인천항 확장을 통한 경제적 이익과 해양 생태계 보호 사이의 균형점을 찾는 과정입니다.</p>
+                    <div class="voting-values">
+                      <span class="value-tag environment"><span data-i18n="dashboard.environment">환경</span>: 9<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag economic"><span data-i18n="dashboard.economic">경제</span>: 5<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag cultural"><span data-i18n="dashboard.cultural">문화</span>: 6<span data-i18n="dashboard.points">점</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="voting-case">
+                  <div class="case-header">
+                    <h4 data-i18n="dashboard.ganghwaWindConflict">강화도 해상풍력 발전소 건설</h4>
+                    <div class="date-info">
+                      <span class="voting-date" data-i18n="dashboard.june5">2024년 6월 5일</span>
+                      <span class="next-voting-date">→ <span data-i18n="dashboard.july5">2024년 7월 5일</span> (<span data-i18n="dashboard.nextVotingAvailable">투표 가능</span>)</span>
+                    </div>
+                  </div>
+                  <div class="case-details">
+                    <p data-i18n="dashboard.ganghwaWindDescription">재생에너지 확대와 지역 주민의 생활권 보호 사이에서 발생한 갈등 사례입니다.</p>
+                    <div class="voting-values">
+                      <span class="value-tag environment"><span data-i18n="dashboard.environment">환경</span>: 7<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag economic"><span data-i18n="dashboard.economic">경제</span>: 8<span data-i18n="dashboard.points">점</span></span>
+                      <span class="value-tag residential"><span data-i18n="dashboard.residential">주거</span>: 9<span data-i18n="dashboard.points">점</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </main>
 
     <!-- Detail Modal -->
     <div id="detailModal" class="modal">
@@ -2819,6 +3033,19 @@
         return names[type] || type;
       }
 
+      function getAreaName(area) {
+        const areaNames = {
+          "강화도": getTranslation("dashboard.ganghwaIsland"),
+          "영종도": getTranslation("dashboard.yeongjongdo"),
+          "송도": getTranslation("dashboard.songdo"),
+          "인천항": getTranslation("dashboard.incheonPort"),
+          "월미도": getTranslation("dashboard.wolmido"),
+          "인천대교": getTranslation("dashboard.incheonBridge"),
+          "영흥도": getTranslation("dashboard.yeongheungdo"),
+        };
+        return areaNames[area] || area;
+      }
+
       function getStatusName(status) {
         const names = {
           review: "검토",
@@ -3387,7 +3614,7 @@
         // 현재 갈등 ID를 전역 변수에 저장
         window.currentConflictId = conflict.id;
 
-        document.getElementById("modalTitle").textContent = conflict.title;
+        document.getElementById("modalTitle").textContent = conflict.title || conflict.area || `갈등 ${conflict.id}`;
 
         const body = document.getElementById("modalBody");
         body.innerHTML = `
@@ -3404,7 +3631,7 @@
                 
                 <div class="detail-section">
                     <h4>🔍 원인</h4>
-                    <p>${conflict.cause}</p>
+                    <p>${conflict.cause || '해당 지역에서 발생한 갈등으로, 다양한 이해관계자들의 가치 충돌이 주요 원인입니다.'}</p>
                 </div>
                 
                 <div class="detail-section">
@@ -3414,7 +3641,7 @@
                           .map(
                             (s) => `
                             <div class="stakeholder-item">
-                                <div class="stakeholder-name">${s.name}</div>
+                                <div class="stakeholder-name">${s.nameKey || s.name || '이해관계자'}</div>
                                 <div class="stakeholder-type">${s.type}</div>
                             </div>
                         `
@@ -3428,7 +3655,7 @@
                     ${conflict.timeline
                       .map(
                         (t) => `
-                        <p><strong>${t.date}:</strong> ${t.event}</p>
+                        <p><strong>${t.date}:</strong> ${t.event || t.eventKey || '이벤트'}</p>
                     `
                       )
                       .join("")}
@@ -3538,9 +3765,11 @@
                         </div>
                         
                         <div class="chart-item">
-                            <h5>이해관계자별 가치 비교</h5>
-                            <div id="stakeholderLegend" class="stakeholder-legend">
-                                <!-- Stakeholder toggles will be populated by JavaScript -->
+                            <div class="chart-header">
+                                <h5>이해관계자별 가치 비교</h5>
+                                <div id="stakeholderLegend" class="stakeholder-legend">
+                                    <!-- Stakeholder toggles will be populated by JavaScript -->
+                                </div>
                             </div>
                             <div class="chart-wrapper">
                                 <canvas id="stakeholderComparisonChart"></canvas>
@@ -3602,7 +3831,22 @@
                  </div>
             `;
 
-        document.getElementById("detailModal").style.display = "block";
+        console.log("Showing modal...");
+        const modal = document.getElementById("detailModal");
+        
+        // 모달을 body의 맨 마지막으로 이동하여 렌더링 문제 해결
+        document.body.appendChild(modal);
+        
+        modal.style.display = "block";
+        modal.style.position = "fixed";
+        modal.style.zIndex = "99999";
+        modal.style.top = "0";
+        modal.style.left = "0";
+        modal.style.width = "100vw";
+        modal.style.height = "100vh";
+        modal.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+        modal.style.pointerEvents = "auto";
+        console.log("Modal display set to block");
 
         // 슬라이더 이벤트 리스너 추가
         setupSliderListeners();
@@ -4567,6 +4811,49 @@
             regionalIntensity: "지역별 갈등 강도",
             valueChanges: "최근 6개월간 나의 가치판단 변화",
             valueChangeDivider: "나의 가치 변화",
+            votingParticipation: "나의 투표 참여 사례",
+            totalParticipation: "총 참여 횟수",
+            activeConflicts: "활성 갈등",
+            times: "회",
+            cases: "개",
+            nextVotingAvailable: "투표 가능",
+            daysLater: "일 후",
+            // 투표 사례들
+            songdoConflict: "송도 국제도시 개발 갈등",
+            songdoDescription: "송도 신도시 개발 과정에서 환경보호와 경제발전 간의 가치 충돌이 발생했습니다.",
+            incheonPortConflict: "인천항 확장 프로젝트",
+            incheonPortDescription: "인천항 확장을 통한 경제적 이익과 해양 생태계 보호 사이의 균형점을 찾는 과정입니다.",
+            ganghwaWindConflict: "강화도 해상풍력 발전소 건설",
+            ganghwaWindDescription: "재생에너지 확대와 지역 주민의 생활권 보호 사이에서 발생한 갈등 사례입니다.",
+            // 가치 태그들
+            environment: "환경",
+            economic: "경제",
+            residential: "주거",
+            cultural: "문화",
+            traffic: "교통",
+            points: "점",
+            // 날짜 형식
+            dateFormat: "YYYY년 M월 D일",
+            august15: "2024년 8월 15일",
+            september15: "2024년 9월 15일",
+            july10: "2024년 7월 10일",
+            august10: "2024년 8월 10일",
+            june5: "2024년 6월 5일",
+            july5: "2024년 7월 5일",
+            // 차트 라벨들
+            conflictIntensity: "갈등 강도",
+            numberOfConflicts: "갈등 발생 건수",
+            numberOfCases: "건수",
+            review: "검토",
+            negotiation: "협상",
+            resolved: "해결",
+            ganghwaIsland: "강화도",
+            yeongjongdo: "영종도",
+            songdo: "송도",
+            incheonPort: "인천항",
+            wolmido: "월미도",
+            incheonBridge: "인천대교",
+            yeongheungdo: "영흥도",
           },
           modal: {
             conflictDetail: "갈등 상세 정보",
@@ -4754,6 +5041,49 @@
             regionalIntensity: "Regional Conflict Intensity",
             valueChanges: "My Value Judgment Changes (Last 6 Months)",
             valueChangeDivider: "My Value Changes",
+            votingParticipation: "My Voting Participation Cases",
+            totalParticipation: "Total Participation",
+            activeConflicts: "Active Conflicts",
+            times: "times",
+            cases: "cases",
+            nextVotingAvailable: "Voting Available",
+            daysLater: "days later",
+            // 투표 사례들
+            songdoConflict: "Songdo International City Development Conflict",
+            songdoDescription: "Conflicts of values arose between environmental protection and economic development in the process of developing Songdo New City.",
+            incheonPortConflict: "Incheon Port Expansion Project",
+            incheonPortDescription: "This is a process of finding a balance between economic benefits through Incheon Port expansion and marine ecosystem protection.",
+            ganghwaWindConflict: "Ganghwa Offshore Wind Power Plant Construction",
+            ganghwaWindDescription: "This is a case of conflict that arose between the expansion of renewable energy and the protection of local residents' living rights.",
+            // 가치 태그들
+            environment: "Environment",
+            economic: "Economic",
+            residential: "Residential",
+            cultural: "Cultural",
+            traffic: "Transportation",
+            points: "points",
+            // 날짜 형식
+            dateFormat: "MMMM D, YYYY",
+            august15: "August 15, 2024",
+            september15: "September 15, 2024",
+            july10: "July 10, 2024",
+            august10: "August 10, 2024",
+            june5: "June 5, 2024",
+            july5: "July 5, 2024",
+            // 차트 라벨들
+            conflictIntensity: "Conflict Intensity",
+            numberOfConflicts: "Number of Conflicts",
+            numberOfCases: "Number of Cases",
+            review: "Review",
+            negotiation: "Negotiation",
+            resolved: "Resolved",
+            ganghwaIsland: "Ganghwa Island",
+            yeongjongdo: "Yeongjongdo",
+            songdo: "Songdo",
+            incheonPort: "Incheon Port",
+            wolmido: "Wolmido",
+            incheonBridge: "Incheon Bridge",
+            yeongheungdo: "Yeongheungdo",
           },
           modal: {
             conflictDetail: "Conflict Detail Information",
@@ -4945,6 +5275,48 @@
             valueChanges:
               "Mes Changements de Jugement de Valeur (6 Derniers Mois)",
             valueChangeDivider: "Mes Changements de Valeur",
+            votingParticipation: "Mes Cas de Participation au Vote",
+            totalParticipation: "Participation Totale",
+            activeConflicts: "Conflits Actifs",
+            times: "fois",
+            cases: "cas",
+            nextVotingAvailable: "Vote Disponible",
+            daysLater: "jours plus tard",
+            // 투표 사례들
+            songdoConflict: "Conflit de Développement de la Ville Internationale de Songdo",
+            songdoDescription: "Des conflits de valeurs ont surgi entre la protection de l'environnement et le développement économique dans le processus de développement de la nouvelle ville de Songdo.",
+            incheonPortConflict: "Projet d'Expansion du Port d'Incheon",
+            incheonPortDescription: "Il s'agit d'un processus de recherche d'équilibre entre les avantages économiques de l'expansion du port d'Incheon et la protection de l'écosystème marin.",
+            ganghwaWindConflict: "Construction de la Centrale Éolienne Offshore de Ganghwa",
+            ganghwaWindDescription: "Il s'agit d'un cas de conflit qui a surgi entre l'expansion des énergies renouvelables et la protection des droits de vie des résidents locaux.",
+            // 가치 태그들
+            environment: "Environnement",
+            economic: "Économique",
+            residential: "Résidentiel",
+            cultural: "Culturel",
+            traffic: "Transport",
+            points: "points",
+            // 날짜 형식
+            dateFormat: "D MMMM YYYY",
+            august15: "15 août 2024",
+            september15: "15 septembre 2024",
+            july10: "10 juillet 2024",
+            august10: "10 août 2024",
+            june5: "5 juin 2024",
+            july5: "5 juillet 2024",
+            // 차트 라벨들
+            conflictIntensity: "Intensité des Conflits",
+            numberOfConflicts: "Nombre de Conflits",
+            numberOfCases: "Nombre de Cas",
+            review: "Examen",
+            negotiation: "Négociation",
+            ganghwaIsland: "Île de Ganghwa",
+            yeongjongdo: "Yeongjongdo",
+            songdo: "Songdo",
+            incheonPort: "Port d'Incheon",
+            wolmido: "Wolmido",
+            incheonBridge: "Pont d'Incheon",
+            yeongheungdo: "Yeongheungdo",
           },
           modal: {
             conflictDetail: "Informations Détaillées du Conflit",
@@ -5139,6 +5511,35 @@
             regionalIntensity: "地域別紛争強度",
             valueChanges: "最近6ヶ月間の私の価値判断変化",
             valueChangeDivider: "私の価値変化",
+            votingParticipation: "私の投票参加事例",
+            totalParticipation: "総参加回数",
+            activeConflicts: "アクティブ紛争",
+            times: "回",
+            cases: "件",
+            nextVotingAvailable: "投票可能",
+            daysLater: "日後",
+            // 투표 사례들
+            songdoConflict: "ソンド国際都市開発紛争",
+            songdoDescription: "ソンド新都市開発過程で環境保護と経済発展の間の価値衝突が発生しました。",
+            incheonPortConflict: "仁川港拡張プロジェクト",
+            incheonPortDescription: "仁川港拡張を通じた経済的利益と海洋生態系保護の間の均衡点を見つける過程です。",
+            ganghwaWindConflict: "江華島海上風力発電所建設",
+            ganghwaWindDescription: "再生エネルギー拡大と地域住民の生活権保護の間で発生した紛争事例です。",
+            // 가치 태그들
+            environment: "環境",
+            economic: "経済",
+            residential: "住宅",
+            cultural: "文化",
+            traffic: "交通",
+            points: "点",
+            // 날짜 형식
+            dateFormat: "YYYY年M月D日",
+            august15: "2024年8月15日",
+            september15: "2024年9月15日",
+            july10: "2024年7月10日",
+            august10: "2024年8月10日",
+            june5: "2024年6月5日",
+            july5: "2024年7月5日",
           },
           modal: {
             conflictDetail: "紛争詳細情報",
@@ -5321,6 +5722,35 @@
             regionalIntensity: "地区冲突强度",
             valueChanges: "最近6个月我的价值判断变化",
             valueChangeDivider: "我的价值变化",
+            votingParticipation: "我的投票参与案例",
+            totalParticipation: "总参与次数",
+            activeConflicts: "活跃冲突",
+            times: "次",
+            cases: "个",
+            nextVotingAvailable: "可投票",
+            daysLater: "天后",
+            // 투표 사례들
+            songdoConflict: "松岛国际城市开发冲突",
+            songdoDescription: "在松岛新城市开发过程中，环境保护与经济发展之间发生了价值冲突。",
+            incheonPortConflict: "仁川港扩建项目",
+            incheonPortDescription: "这是在仁川港扩建带来的经济利益与海洋生态系统保护之间寻找平衡点的过程。",
+            ganghwaWindConflict: "江华岛海上风力发电站建设",
+            ganghwaWindDescription: "这是可再生能源扩张与当地居民生活权保护之间发生的冲突案例。",
+            // 가치 태그들
+            environment: "环境",
+            economic: "经济",
+            residential: "住宅",
+            cultural: "文化",
+            traffic: "交通",
+            points: "分",
+            // 날짜 형식
+            dateFormat: "YYYY年M月D日",
+            august15: "2024年8月15日",
+            september15: "2024年9月15日",
+            july10: "2024年7月10日",
+            august10: "2024年8月10日",
+            june5: "2024年6月5日",
+            july5: "2024年7月5日",
           },
           modal: {
             conflictDetail: "冲突详细信息",
@@ -5502,6 +5932,35 @@
             regionalIntensity: "Intensidad de Conflictos por Región",
             valueChanges: "Mis Cambios de Juicio de Valor (Últimos 6 Meses)",
             valueChangeDivider: "Mis Cambios de Valor",
+            votingParticipation: "Mis Casos de Participación en Votación",
+            totalParticipation: "Participación Total",
+            activeConflicts: "Conflictos Activos",
+            times: "veces",
+            cases: "casos",
+            nextVotingAvailable: "Votación Disponible",
+            daysLater: "días después",
+            // 투표 사례들
+            songdoConflict: "Conflicto de Desarrollo de la Ciudad Internacional de Songdo",
+            songdoDescription: "Surgieron conflictos de valores entre la protección ambiental y el desarrollo económico en el proceso de desarrollo de la nueva ciudad de Songdo.",
+            incheonPortConflict: "Proyecto de Expansión del Puerto de Incheon",
+            incheonPortDescription: "Este es un proceso de encontrar un equilibrio entre los beneficios económicos de la expansión del puerto de Incheon y la protección del ecosistema marino.",
+            ganghwaWindConflict: "Construcción de la Planta Eólica Marina de Ganghwa",
+            ganghwaWindDescription: "Este es un caso de conflicto que surgió entre la expansión de energías renovables y la protección de los derechos de vida de los residentes locales.",
+            // 가치 태그들
+            environment: "Ambiente",
+            economic: "Económico",
+            residential: "Residencial",
+            cultural: "Cultural",
+            traffic: "Transporte",
+            points: "puntos",
+            // 날짜 형식
+            dateFormat: "D de MMMM de YYYY",
+            august15: "15 de agosto de 2024",
+            september15: "15 de septiembre de 2024",
+            july10: "10 de julio de 2024",
+            august10: "10 de agosto de 2024",
+            june5: "5 de junio de 2024",
+            july5: "5 de julio de 2024",
           },
           modal: {
             conflictDetail: "Información Detallada del Conflicto",
