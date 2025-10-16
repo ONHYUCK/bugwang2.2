@@ -342,7 +342,7 @@
         
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 350px;
         }
 
       .voting-summary {
@@ -1546,7 +1546,6 @@
               id="loadMoreBtn"
               class="load-more-btn"
               onclick="loadMoreConflicts()"
-              data-i18n="conflicts.viewAll"
             >
                          🚀 사례 더보기 (3개씩)
                      </button>
@@ -3127,74 +3126,374 @@
         return colors[type] || "#94a3b8";
         }
 
-        function getTypeName(type) {
-            const names = {
-          environment: "환경",
-          economic: "경제",
-          residential: "주거",
-          cultural: "문화",
-          traffic: "교통",
-            };
-            return names[type] || type;
-        }
+      function getTypeName(type) {
+        const names = {
+          ko: {
+            environment: "환경",
+            economic: "경제",
+            residential: "주거",
+            cultural: "문화",
+            traffic: "교통",
+          },
+          en: {
+            environment: "Environment",
+            economic: "Economic",
+            residential: "Residential",
+            cultural: "Cultural",
+            traffic: "Transport",
+          },
+          fr: {
+            environment: "Environnement",
+            economic: "Économique",
+            residential: "Logement",
+            cultural: "Culturel",
+            traffic: "Transport",
+          },
+          ja: {
+            environment: "環境",
+            economic: "経済",
+            residential: "住宅",
+            cultural: "文化",
+            traffic: "交通",
+          },
+          zh: {
+            environment: "环境",
+            economic: "经济",
+            residential: "住宅",
+            cultural: "文化",
+            traffic: "交通",
+          },
+          es: {
+            environment: "Ambiental",
+            economic: "Económico",
+            residential: "Residencial",
+            cultural: "Cultural",
+            traffic: "Transporte",
+          }
+        };
+        return names[currentLanguage]?.[type] || names['ko'][type] || type;
+      }
 
       function getConflictTitle(conflictKey) {
         if (!conflictKey) {
-          return '갈등 제목 없음';
+          const fallbacks = {
+            ko: '갈등 제목 없음',
+            en: 'Missing Conflict Title',
+            fr: 'Titre de conflit manquant',
+            ja: '紛争タイトルなし',
+            zh: '缺少冲突标题',
+            es: 'Título de conflicto faltante'
+          };
+          return fallbacks[currentLanguage] || fallbacks['ko'];
         }
         const titles = {
-          ganghwa: "강화도 갯벌 매립 논란",
-          yeongheung: "영흥도 해상풍력 발전 갈등",
-          songdo: "송도 항만 확장 계획",
-          incheonPort: "인천항 신규 터미널 건설",
-          wolmido: "월미도 관광지 개발",
-          incheonBridge: "인천대교 확장 공사",
-          yeongjongdo: "영종도 해상공원 조성",
-          ganghwaWind: "강화도 육상풍력 발전 갈등",
-          songdoResidential: "송도 주거지 개발 갈등",
-          incheonPortExpansion: "인천항 확장 공사",
-          wolmidoCultural: "월미도 문화유산 보존",
-          incheonBridgeTraffic: "인천대교 교통 개선",
-          yeongjongdoEco: "영종도 생태보전구역",
-          ganghwaEco: "강화도 생태보전구역",
-          songdoEco: "송도 생태보전구역",
-          ganghwaCultural: "강화도 문화유산 복원",
-          incheonPortTourism: "인천항 연안 관광로 조성",
-          yeongheungEcoPark: "영흥도 해양생태공원",
-          songdoTraffic: "송도 신도시 교통망 확장",
-          incheonPortLeisure: "인천항 해양레저시설",
-          ganghwaTraditionalMarket: "강화도 전통시장 보존",
-          incheonPortSmart: "인천항 스마트항만 구축"
+          ko: {
+            ganghwa: "강화도 갯벌 매립 논란",
+            yeongheung: "영흥도 해상풍력 발전 갈등",
+            songdo: "송도 항만 확장 계획",
+            incheonPort: "인천항 신규 터미널 건설",
+            wolmido: "월미도 관광지 개발",
+            incheonBridge: "인천대교 확장 공사",
+            yeongjongdo: "영종도 해상공원 조성",
+            ganghwaWind: "강화도 육상풍력 발전 갈등",
+            songdoResidential: "송도 주거지 개발 갈등",
+            incheonPortExpansion: "인천항 확장 공사",
+            wolmidoCultural: "월미도 문화유산 보존",
+            incheonBridgeTraffic: "인천대교 교통 개선",
+            yeongjongdoEco: "영종도 생태보전구역",
+            ganghwaEco: "강화도 생태보전구역",
+            songdoEco: "송도 생태보전구역",
+            ganghwaCultural: "강화도 문화유산 복원",
+            incheonPortTourism: "인천항 연안 관광로 조성",
+            yeongheungEcoPark: "영흥도 해양생태공원",
+            songdoTraffic: "송도 신도시 교통망 확장",
+            incheonPortLeisure: "인천항 해양레저시설",
+            ganghwaTraditionalMarket: "강화도 전통시장 보존",
+            incheonPortSmart: "인천항 스마트항만 구축"
+          },
+          en: {
+            ganghwa: "Ganghwa Tidal Flat Reclamation Controversy",
+            yeongheung: "Yeongheung Offshore Wind Power Conflict",
+            songdo: "Songdo Port Expansion Plan",
+            incheonPort: "Incheon Port New Terminal Construction",
+            wolmido: "Wolmido Tourist Development",
+            incheonBridge: "Incheon Bridge Expansion Project",
+            yeongjongdo: "Yeongjong Marine Park Creation",
+            ganghwaWind: "Ganghwa Onshore Wind Power Conflict",
+            songdoResidential: "Songdo Residential Development Conflict",
+            incheonPortExpansion: "Incheon Port Expansion Project",
+            wolmidoCultural: "Wolmido Cultural Heritage Preservation",
+            incheonBridgeTraffic: "Incheon Bridge Traffic Improvement",
+            yeongjongdoEco: "Yeongjong Ecological Conservation Zone",
+            ganghwaEco: "Ganghwa Ecological Conservation Zone",
+            songdoEco: "Songdo Ecological Conservation Zone",
+            ganghwaCultural: "Ganghwa Cultural Heritage Restoration",
+            incheonPortTourism: "Incheon Port Coastal Tourism Route",
+            yeongheungEcoPark: "Yeongheung Marine Ecological Park",
+            songdoTraffic: "Songdo New City Transportation Network Expansion",
+            incheonPortLeisure: "Incheon Port Marine Leisure Facilities",
+            ganghwaTraditionalMarket: "Ganghwa Traditional Market Preservation",
+            incheonPortSmart: "Incheon Port Smart Port Construction"
+          },
+          fr: {
+            ganghwa: "Controverse sur le Remblayage des Zones Humides de Ganghwa",
+            yeongheung: "Conflit Éolien Offshore de Yeongheung",
+            songdo: "Plan d'Expansion du Port de Songdo",
+            incheonPort: "Construction du Nouveau Terminal du Port d'Incheon",
+            wolmido: "Développement Touristique de Wolmido",
+            incheonBridge: "Projet d'Extension du Pont d'Incheon",
+            yeongjongdo: "Création du Parc Marin de Yeongjong",
+            ganghwaWind: "Conflit Éolien Terrestre de Ganghwa",
+            songdoResidential: "Conflit de Développement Résidentiel de Songdo",
+            incheonPortExpansion: "Projet d'Extension du Port d'Incheon",
+            wolmidoCultural: "Préservation du Patrimoine Culturel de Wolmido",
+            incheonBridgeTraffic: "Amélioration du Trafic du Pont d'Incheon",
+            yeongjongdoEco: "Zone de Conservation Écologique de Yeongjong",
+            ganghwaEco: "Zone de Conservation Écologique de Ganghwa",
+            songdoEco: "Zone de Conservation Écologique de Songdo",
+            ganghwaCultural: "Restauration du Patrimoine Culturel de Ganghwa",
+            incheonPortTourism: "Création de la Route Touristique Côtière d'Incheon",
+            yeongheungEcoPark: "Parc Écologique Marin de Yeongheung",
+            songdoTraffic: "Extension du Réseau de Transport de Songdo",
+            incheonPortLeisure: "Installations de Loisirs Marins du Port d'Incheon",
+            ganghwaTraditionalMarket: "Préservation du Marché Traditionnel de Ganghwa",
+            incheonPortSmart: "Construction du Port Intelligent d'Incheon"
+          },
+          ja: {
+            ganghwa: "江華島干潟埋立論争",
+            yeongheung: "永興島洋上風力発電紛争",
+            songdo: "松島港湾拡張計画",
+            incheonPort: "仁川港新ターミナル建設",
+            wolmido: "月尾島観光地開発",
+            incheonBridge: "仁川大橋拡張工事",
+            yeongjongdo: "永宗島海洋公園造成",
+            ganghwaWind: "江華島陸上風力発電紛争",
+            songdoResidential: "松島住宅地開発紛争",
+            incheonPortExpansion: "仁川港拡張工事",
+            wolmidoCultural: "月尾島文化遺産保存",
+            incheonBridgeTraffic: "仁川大橋交通改善",
+            yeongjongdoEco: "永宗島生態保護区域",
+            ganghwaEco: "江華島生態保護区域",
+            songdoEco: "松島生態保護区域",
+            ganghwaCultural: "江華島文化遺産復元",
+            incheonPortTourism: "仁川港沿岸観光路造成",
+            yeongheungEcoPark: "永興島海洋生態公園",
+            songdoTraffic: "松島新都市交通網拡張",
+            incheonPortLeisure: "仁川港海洋レジャー施設",
+            ganghwaTraditionalMarket: "江華島伝統市場保存",
+            incheonPortSmart: "仁川港スマート港湾構築"
+          },
+          zh: {
+            ganghwa: "江华岛滩涂填海争议",
+            yeongheung: "永兴岛海上风力发电冲突",
+            songdo: "松岛港口扩建计划",
+            incheonPort: "仁川港新码头建设",
+            wolmido: "月尾岛旅游开发",
+            incheonBridge: "仁川大桥扩建工程",
+            yeongjongdo: "永宗岛海洋公园建设",
+            ganghwaWind: "江华岛陆上风力发电冲突",
+            songdoResidential: "松岛住宅开发冲突",
+            incheonPortExpansion: "仁川港扩建工程",
+            wolmidoCultural: "月尾岛文化遗产保护",
+            incheonBridgeTraffic: "仁川大桥交通改善",
+            yeongjongdoEco: "永宗岛生态保护区",
+            ganghwaEco: "江华岛生态保护区",
+            songdoEco: "松岛生态保护区",
+            ganghwaCultural: "江华岛文化遗产修复",
+            incheonPortTourism: "仁川港沿海旅游路线建设",
+            yeongheungEcoPark: "永兴岛海洋生态公园",
+            songdoTraffic: "松岛新城市交通网扩建",
+            incheonPortLeisure: "仁川港海洋休闲设施",
+            ganghwaTraditionalMarket: "江华岛传统市场保护",
+            incheonPortSmart: "仁川港智能港口建设"
+          },
+          es: {
+            ganghwa: "Controversia del Relleno de Marismas de Ganghwa",
+            yeongheung: "Conflicto Eólico Marino de Yeongheung",
+            songdo: "Plan de Expansión del Puerto de Songdo",
+            incheonPort: "Construcción del Nuevo Terminal del Puerto de Incheon",
+            wolmido: "Desarrollo Turístico de Wolmido",
+            incheonBridge: "Proyecto de Ampliación del Puente de Incheon",
+            yeongjongdo: "Creación del Parque Marino de Yeongjong",
+            ganghwaWind: "Conflicto Eólico Terrestre de Ganghwa",
+            songdoResidential: "Conflicto de Desarrollo Residencial de Songdo",
+            incheonPortExpansion: "Proyecto de Expansión del Puerto de Incheon",
+            wolmidoCultural: "Preservación del Patrimonio Cultural de Wolmido",
+            incheonBridgeTraffic: "Mejora del Tráfico del Puente de Incheon",
+            yeongjongdoEco: "Zona de Conservación Ecológica de Yeongjong",
+            ganghwaEco: "Zona de Conservación Ecológica de Ganghwa",
+            songdoEco: "Zona de Conservación Ecológica de Songdo",
+            ganghwaCultural: "Restauración del Patrimonio Cultural de Ganghwa",
+            incheonPortTourism: "Creación de la Ruta Turística Costera de Incheon",
+            yeongheungEcoPark: "Parque Ecológico Marino de Yeongheung",
+            songdoTraffic: "Expansión de la Red de Transporte de Songdo",
+            incheonPortLeisure: "Instalaciones de Ocio Marino del Puerto de Incheon",
+            ganghwaTraditionalMarket: "Preservación del Mercado Tradicional de Ganghwa",
+            incheonPortSmart: "Construcción del Puerto Inteligente de Incheon"
+          }
         };
-        return titles[conflictKey] || '갈등 제목 없음';
+        return titles[currentLanguage]?.[conflictKey] || titles['ko'][conflictKey] || '갈등 제목 없음';
       }
 
       function getConflictDescription(conflictKey) {
+        if (!conflictKey) {
+          const fallbacks = {
+            ko: '갈등 설명이 없습니다.',
+            en: 'Missing conflict description',
+            fr: 'Description de conflit manquante',
+            ja: '紛争の説明がありません',
+            zh: '缺少冲突描述',
+            es: 'Descripción de conflicto faltante'
+          };
+          return fallbacks[currentLanguage] || fallbacks['ko'];
+        }
         const descriptions = {
-          ganghwa: "강화도 갯벌 지역의 대규모 매립 사업으로 인한 생태계 파괴 우려와 지역 개발 간의 갈등",
-          yeongheung: "영흥도 인근 해상에 대규모 풍력발전단지 건설로 인한 어업권 침해와 환경 영향 갈등",
-          songdo: "송도 신도시 항만 확장으로 인한 주민 생활권 침해와 물류 효율성 증대 간의 갈등",
-          incheonPort: "인천항에 신규 컨테이너 터미널 건설로 인한 해양 생태계 영향과 경제 발전 간의 갈등",
-          wolmido: "월미도 관광지 개발로 인한 문화유산 보존과 관광 발전 간의 갈등",
-          incheonBridge: "인천대교 확장 공사로 인한 교통 혼잡과 환경 영향 간의 갈등",
-          yeongjongdo: "영종도 해상공원 조성으로 인한 생태계 보호와 관광 개발 간의 갈등",
-          ganghwaWind: "강화도 육상풍력 발전 단지 건설로 인한 환경 영향과 청정 에너지 확보 간의 갈등",
-          songdoResidential: "송도 주거지 개발로 인한 주민 생활권 보호와 도시 발전 간의 갈등",
-          incheonPortExpansion: "인천항 확장 공사로 인한 해양 생태계 보호와 물류 효율성 증대 간의 갈등",
-          wolmidoCultural: "월미도 문화유산 보존과 관광 개발 간의 갈등",
-          incheonBridgeTraffic: "인천대교 교통 개선과 환경 보호 간의 갈등",
-          yeongjongdoEco: "영종도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
-          ganghwaEco: "강화도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
-          songdoEco: "송도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
-          ganghwaCultural: "강화도 문화유산 복원 사업으로 인한 문화 보존과 개발 간의 갈등",
-          incheonPortTourism: "인천항 연안 관광로 조성으로 인한 교통 혼잡과 관광 발전 간의 갈등",
-          yeongheungEcoPark: "영흥도 해양생태공원 조성으로 인한 생태계 보호와 교육 발전 간의 갈등",
-          songdoTraffic: "송도 신도시 교통망 확장으로 인한 교통 개선과 환경 영향 간의 갈등",
-          incheonPortLeisure: "인천항 해양레저시설 건설로 인한 해양 환경과 레저 발전 간의 갈등",
-          ganghwaTraditionalMarket: "강화도 전통시장 보존으로 인한 문화 보존과 현대화 간의 갈등",
-          incheonPortSmart: "인천항 스마트항만 구축으로 인한 기술 발전과 고용 영향 간의 갈등"
+          ko: {
+            ganghwa: "강화도 갯벌 지역의 대규모 매립 사업으로 인한 생태계 파괴 우려와 지역 개발 간의 갈등",
+            yeongheung: "영흥도 인근 해상에 대규모 풍력발전단지 건설로 인한 어업권 침해와 환경 영향 갈등",
+            songdo: "송도 신도시 항만 확장으로 인한 주민 생활권 침해와 물류 효율성 증대 간의 갈등",
+            incheonPort: "인천항에 신규 컨테이너 터미널 건설로 인한 해양 생태계 영향과 경제 발전 간의 갈등",
+            wolmido: "월미도 관광지 개발로 인한 문화유산 보존과 관광 발전 간의 갈등",
+            incheonBridge: "인천대교 확장 공사로 인한 교통 혼잡과 환경 영향 간의 갈등",
+            yeongjongdo: "영종도 해상공원 조성으로 인한 생태계 보호와 관광 개발 간의 갈등",
+            ganghwaWind: "강화도 육상풍력 발전 단지 건설로 인한 환경 영향과 청정 에너지 확보 간의 갈등",
+            songdoResidential: "송도 주거지 개발로 인한 주민 생활권 보호와 도시 발전 간의 갈등",
+            incheonPortExpansion: "인천항 확장 공사로 인한 해양 생태계 보호와 물류 효율성 증대 간의 갈등",
+            wolmidoCultural: "월미도 문화유산 보존과 관광 개발 간의 갈등",
+            incheonBridgeTraffic: "인천대교 교통 개선과 환경 보호 간의 갈등",
+            yeongjongdoEco: "영종도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
+            ganghwaEco: "강화도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
+            songdoEco: "송도 생태보전구역 설정으로 인한 환경 보호와 개발 간의 갈등",
+            ganghwaCultural: "강화도 문화유산 복원 사업으로 인한 문화 보존과 개발 간의 갈등",
+            incheonPortTourism: "인천항 연안 관광로 조성으로 인한 교통 혼잡과 관광 발전 간의 갈등",
+            yeongheungEcoPark: "영흥도 해양생태공원 조성으로 인한 생태계 보호와 교육 발전 간의 갈등",
+            songdoTraffic: "송도 신도시 교통망 확장으로 인한 교통 개선과 환경 영향 간의 갈등",
+            incheonPortLeisure: "인천항 해양레저시설 건설로 인한 해양 환경과 레저 발전 간의 갈등",
+            ganghwaTraditionalMarket: "강화도 전통시장 보존으로 인한 문화 보존과 현대화 간의 갈등",
+            incheonPortSmart: "인천항 스마트항만 구축으로 인한 기술 발전과 고용 영향 간의 갈등"
+          },
+          en: {
+            ganghwa: "Conflict between ecosystem destruction concerns due to large-scale reclamation projects in Ganghwa tidal flats and regional development",
+            yeongheung: "Conflict over fishing rights infringement and environmental impact from large-scale wind farm construction in waters near Yeongheung",
+            songdo: "Conflict between resident living rights infringement due to Songdo port expansion and logistics efficiency improvement",
+            incheonPort: "Conflict between marine ecosystem impact from new container terminal construction at Incheon Port and economic development",
+            wolmido: "Conflict between cultural heritage preservation and tourism development due to Wolmido tourist development",
+            incheonBridge: "Conflict between traffic congestion and environmental impact from Incheon Bridge expansion project",
+            yeongjongdo: "Conflict between ecosystem protection and tourism development due to Yeongjong marine park creation",
+            ganghwaWind: "Conflict between environmental impact and clean energy acquisition from Ganghwa onshore wind farm construction",
+            songdoResidential: "Conflict between resident living rights protection and urban development from Songdo residential development",
+            incheonPortExpansion: "Conflict between marine ecosystem protection and logistics efficiency improvement from Incheon Port expansion project",
+            wolmidoCultural: "Conflict between cultural heritage preservation and tourism development in Wolmido",
+            incheonBridgeTraffic: "Conflict between traffic improvement and environmental protection of Incheon Bridge",
+            yeongjongdoEco: "Conflict between environmental protection and development due to Yeongjong ecological conservation zone establishment",
+            ganghwaEco: "Conflict between environmental protection and development due to Ganghwa ecological conservation zone establishment",
+            songdoEco: "Conflict between environmental protection and development due to Songdo ecological conservation zone establishment",
+            ganghwaCultural: "Conflict between cultural preservation and development from Ganghwa cultural heritage restoration project",
+            incheonPortTourism: "Conflict between traffic congestion and tourism development from Incheon Port coastal tourism route creation",
+            yeongheungEcoPark: "Conflict between ecosystem protection and educational development from Yeongheung marine ecological park creation",
+            songdoTraffic: "Conflict between traffic improvement and environmental impact from Songdo new city transportation network expansion",
+            incheonPortLeisure: "Conflict between marine environment and leisure development from Incheon Port marine leisure facilities construction",
+            ganghwaTraditionalMarket: "Conflict between cultural preservation and modernization from Ganghwa traditional market preservation",
+            incheonPortSmart: "Conflict between technological development and employment impact from Incheon Port smart port construction"
+          },
+          fr: {
+            ganghwa: "Conflit entre les préoccupations de destruction de l'écosystème dues aux projets de remblayage à grande échelle dans les zones humides de Ganghwa et le développement régional",
+            yeongheung: "Conflit sur l'infraction aux droits de pêche et l'impact environnemental de la construction d'un complexe éolien à grande échelle dans les eaux près de Yeongheung",
+            songdo: "Conflit entre l'infraction à la zone de vie des résidents due à l'expansion du port de Songdo et l'amélioration de l'efficacité logistique",
+            incheonPort: "Conflit entre l'impact sur les écosystèmes marins dû à la construction d'un nouveau terminal de conteneurs au port d'Incheon et le développement économique",
+            wolmido: "Conflit entre la préservation du patrimoine culturel et le développement touristique dû au développement touristique de Wolmido",
+            incheonBridge: "Conflit entre l'encombrement du trafic et l'impact environnemental dû au projet d'extension du pont d'Incheon",
+            yeongjongdo: "Conflit entre la protection de l'écosystème et le développement touristique dû à la création du parc marin de Yeongjong",
+            ganghwaWind: "Conflit entre l'impact environnemental et l'acquisition d'énergie propre dû à la construction d'un complexe éolien terrestre à Ganghwa",
+            songdoResidential: "Conflit entre la protection des droits de vie des résidents et le développement urbain dû au développement résidentiel de Songdo",
+            incheonPortExpansion: "Conflit entre la protection des écosystèmes marins et l'amélioration de l'efficacité logistique dû au projet d'extension du port d'Incheon",
+            wolmidoCultural: "Conflit entre la préservation du patrimoine culturel et le développement touristique de Wolmido",
+            incheonBridgeTraffic: "Conflit entre l'amélioration du trafic et la protection de l'environnement du pont d'Incheon",
+            yeongjongdoEco: "Conflit entre la protection de l'environnement et le développement dû à l'établissement de la zone de conservation écologique de Yeongjong",
+            ganghwaEco: "Conflit entre la protection de l'environnement et le développement dû à l'établissement de la zone de conservation écologique de Ganghwa",
+            songdoEco: "Conflit entre la protection de l'environnement et le développement dû à l'établissement de la zone de conservation écologique de Songdo",
+            ganghwaCultural: "Conflit entre la préservation culturelle et le développement dû au projet de restauration du patrimoine culturel de Ganghwa",
+            incheonPortTourism: "Conflit entre l'encombrement du trafic et le développement touristique dû à la création de la route touristique côtière d'Incheon",
+            yeongheungEcoPark: "Conflit entre la protection de l'écosystème et le développement éducatif dû à la création du parc écologique marin de Yeongheung",
+            songdoTraffic: "Conflit entre l'amélioration du trafic et l'impact environnemental dû à l'extension du réseau de transport de Songdo",
+            incheonPortLeisure: "Conflit entre l'environnement marin et le développement des loisirs dû à la construction d'installations de loisirs marins du port d'Incheon",
+            ganghwaTraditionalMarket: "Conflit entre la préservation culturelle et la modernisation dû à la préservation du marché traditionnel de Ganghwa",
+            incheonPortSmart: "Conflit entre le développement technologique et l'impact sur l'emploi dû à la construction du port intelligent d'Incheon"
+          },
+          ja: {
+            ganghwa: "江華島干潟地域の大規模埋立事業による生態系破壊の懸念と地域開発の間の紛争",
+            yeongheung: "永興島近海の大規模風力発電団地建設による漁業権侵害と環境影響の紛争",
+            songdo: "松島新都市港湾拡張による住民生活圏侵害と物流効率向上の間の紛争",
+            incheonPort: "仁川港新コンテナターミナル建設による海洋生態系影響と経済発展の間の紛争",
+            wolmido: "月尾島観光地開発による文化遺産保存と観光発展の間の紛争",
+            incheonBridge: "仁川大橋拡張工事による交通渋滞と環境影響の間の紛争",
+            yeongjongdo: "永宗島海洋公園造成による生態系保護と観光開発の間の紛争",
+            ganghwaWind: "江華島陸上風力発電団地建設による環境影響とクリーンエネルギー確保の間の紛争",
+            songdoResidential: "松島住宅地開発による住民生活権保護と都市発展の間の紛争",
+            incheonPortExpansion: "仁川港拡張工事による海洋生態系保護と物流効率向上の間の紛争",
+            wolmidoCultural: "月尾島文化遺産保存と観光開発の間の紛争",
+            incheonBridgeTraffic: "仁川大橋交通改善と環境保護の間の紛争",
+            yeongjongdoEco: "永宗島生態保護区域設定による環境保護と開発の間の紛争",
+            ganghwaEco: "江華島生態保護区域設定による環境保護と開発の間の紛争",
+            songdoEco: "松島生態保護区域設定による環境保護と開発の間の紛争",
+            ganghwaCultural: "江華島文化遺産復元事業による文化保存と開発の間の紛争",
+            incheonPortTourism: "仁川港沿岸観光路造成による交通渋滞と観光発展の間の紛争",
+            yeongheungEcoPark: "永興島海洋生態公園造成による生態系保護と教育発展の間の紛争",
+            songdoTraffic: "松島新都市交通網拡張による交通改善と環境影響の間の紛争",
+            incheonPortLeisure: "仁川港海洋レジャー施設建設による海洋環境とレジャー発展の間の紛争",
+            ganghwaTraditionalMarket: "江華島伝統市場保存による文化保存と現代化の間の紛争",
+            incheonPortSmart: "仁川港スマート港湾構築による技術発展と雇用影響の間の紛争"
+          },
+          zh: {
+            ganghwa: "江华岛滩涂地区大规模填海工程导致的生态系统破坏担忧与区域开发之间的冲突",
+            yeongheung: "永兴岛近海大规模风力发电园区建设导致的渔业权侵害与环境影响冲突",
+            songdo: "松岛新城市港口扩建导致的居民生活圈侵害与物流效率提升之间的冲突",
+            incheonPort: "仁川港新集装箱码头建设导致的海洋生态系统影响与经济发展之间的冲突",
+            wolmido: "月尾岛旅游开发导致的文化遗产保护与旅游发展之间的冲突",
+            incheonBridge: "仁川大桥扩建工程导致的交通拥堵与环境影响之间的冲突",
+            yeongjongdo: "永宗岛海洋公园建设导致的生态系统保护与旅游开发之间的冲突",
+            ganghwaWind: "江华岛陆上风力发电园区建设导致的环境影响与清洁能源获取之间的冲突",
+            songdoResidential: "松岛住宅开发导致的居民生活权保护与城市发展之间的冲突",
+            incheonPortExpansion: "仁川港扩建工程导致的海洋生态系统保护与物流效率提升之间的冲突",
+            wolmidoCultural: "月尾岛文化遗产保护与旅游发展之间的冲突",
+            incheonBridgeTraffic: "仁川大桥交通改善与环境保护之间的冲突",
+            yeongjongdoEco: "永宗岛生态保护区设置导致的环境保护与开发之间的冲突",
+            ganghwaEco: "江华岛生态保护区设置导致的环境保护与开发之间的冲突",
+            songdoEco: "松岛生态保护区设置导致的环境保护与开发之间的冲突",
+            ganghwaCultural: "江华岛文化遗产修复工程导致的文化保护与开发之间的冲突",
+            incheonPortTourism: "仁川港沿海旅游路线建设导致的交通拥堵与旅游发展之间的冲突",
+            yeongheungEcoPark: "永兴岛海洋生态公园建设导致的生态系统保护与教育发展之间的冲突",
+            songdoTraffic: "松岛新城市交通网扩建导致的交通改善与环境影响之间的冲突",
+            incheonPortLeisure: "仁川港海洋休闲设施建设导致的海洋环境与休闲发展之间的冲突",
+            ganghwaTraditionalMarket: "江华岛传统市场保护导致的文化保护与现代化之间的冲突",
+            incheonPortSmart: "仁川港智能港口建设导致的技术发展与就业影响之间的冲突"
+          },
+          es: {
+            ganghwa: "Conflicto entre las preocupaciones de destrucción del ecosistema debido a proyectos de relleno a gran escala en las marismas de Ganghwa y el desarrollo regional",
+            yeongheung: "Conflicto sobre la infracción de derechos de pesca y el impacto ambiental de la construcción de un complejo eólico a gran escala en las aguas cerca de Yeongheung",
+            songdo: "Conflicto entre la infracción de la zona de vida de los residentes debido a la expansión del puerto de Songdo y la mejora de la eficiencia logística",
+            incheonPort: "Conflicto entre el impacto en los ecosistemas marinos debido a la construcción de un nuevo terminal de contenedores en el puerto de Incheon y el desarrollo económico",
+            wolmido: "Conflicto entre la preservación del patrimonio cultural y el desarrollo turístico debido al desarrollo turístico de Wolmido",
+            incheonBridge: "Conflicto entre la congestión del tráfico y el impacto ambiental debido al proyecto de ampliación del puente de Incheon",
+            yeongjongdo: "Conflicto entre la protección del ecosistema y el desarrollo turístico debido a la creación del parque marino de Yeongjong",
+            ganghwaWind: "Conflicto entre el impacto ambiental y la adquisición de energía limpia debido a la construcción de un complejo eólico terrestre en Ganghwa",
+            songdoResidential: "Conflicto entre la protección de los derechos de vida de los residentes y el desarrollo urbano debido al desarrollo residencial de Songdo",
+            incheonPortExpansion: "Conflicto entre la protección de los ecosistemas marinos y la mejora de la eficiencia logística debido al proyecto de expansión del puerto de Incheon",
+            wolmidoCultural: "Conflicto entre la preservación del patrimonio cultural y el desarrollo turístico de Wolmido",
+            incheonBridgeTraffic: "Conflicto entre la mejora del tráfico y la protección del medio ambiente del puente de Incheon",
+            yeongjongdoEco: "Conflicto entre la protección del medio ambiente y el desarrollo debido al establecimiento de la zona de conservación ecológica de Yeongjong",
+            ganghwaEco: "Conflicto entre la protección del medio ambiente y el desarrollo debido al establecimiento de la zona de conservación ecológica de Ganghwa",
+            songdoEco: "Conflicto entre la protección del medio ambiente y el desarrollo debido al establecimiento de la zona de conservación ecológica de Songdo",
+            ganghwaCultural: "Conflicto entre la preservación cultural y el desarrollo debido al proyecto de restauración del patrimonio cultural de Ganghwa",
+            incheonPortTourism: "Conflicto entre la congestión del tráfico y el desarrollo turístico debido a la creación de la ruta turística costera de Incheon",
+            yeongheungEcoPark: "Conflicto entre la protección del ecosistema y el desarrollo educativo debido a la creación del parque ecológico marino de Yeongheung",
+            songdoTraffic: "Conflicto entre la mejora del tráfico y el impacto ambiental debido a la expansión de la red de transporte de Songdo",
+            incheonPortLeisure: "Conflicto entre el medio ambiente marino y el desarrollo del ocio debido a la construcción de instalaciones de ocio marino del puerto de Incheon",
+            ganghwaTraditionalMarket: "Conflicto entre la preservación cultural y la modernización debido a la preservación del mercado tradicional de Ganghwa",
+            incheonPortSmart: "Conflicto entre el desarrollo tecnológico y el impacto en el empleo debido a la construcción del puerto inteligente de Incheon"
+          }
         };
-        return descriptions[conflictKey] || '갈등 설명이 없습니다.';
+        return descriptions[currentLanguage]?.[conflictKey] || descriptions['ko'][conflictKey] || '갈등 설명이 없습니다.';
       }
 
       function getAreaName(area) {
@@ -3210,14 +3509,137 @@
         return areaNames[area] || area;
       }
 
-        function getStatusName(status) {
-            const names = {
-          review: "검토",
-          negotiation: "협상",
-          resolved: "해결",
-            };
-            return names[status] || status;
-        }
+      function getChartLabel(key) {
+        const labels = {
+          ko: {
+            numberOfConflicts: "갈등 발생 건수",
+            numberOfCases: "건수",
+            conflictIntensity: "갈등 강도"
+          },
+          en: {
+            numberOfConflicts: "Number of Conflicts",
+            numberOfCases: "Number of Cases",
+            conflictIntensity: "Conflict Intensity"
+          },
+          fr: {
+            numberOfConflicts: "Nombre de Conflits",
+            numberOfCases: "Nombre de Cas",
+            conflictIntensity: "Intensité des Conflits"
+          },
+          ja: {
+            numberOfConflicts: "紛争発生件数",
+            numberOfCases: "件数",
+            conflictIntensity: "紛争強度"
+          },
+          zh: {
+            numberOfConflicts: "冲突发生数量",
+            numberOfCases: "案例数量",
+            conflictIntensity: "冲突强度"
+          },
+          es: {
+            numberOfConflicts: "Número de Conflictos",
+            numberOfCases: "Número de Casos",
+            conflictIntensity: "Intensidad de Conflictos"
+          }
+        };
+        return labels[currentLanguage]?.[key] || labels['ko'][key] || key;
+      }
+
+      function getAreaName(area) {
+        const areaNames = {
+          ko: {
+            "강화도": "강화도",
+            "영종도": "영종도", 
+            "인천대교": "인천대교",
+            "월미도": "월미도",
+            "인천항": "인천항",
+            "송도": "송도",
+            "영흥도": "영흥도"
+          },
+          en: {
+            "강화도": "Ganghwa Island",
+            "영종도": "Yeongjong Island",
+            "인천대교": "Incheon Bridge", 
+            "월미도": "Wolmido Island",
+            "인천항": "Incheon Port",
+            "송도": "Songdo",
+            "영흥도": "Yeongheung Island"
+          },
+          fr: {
+            "강화도": "Île de Ganghwa",
+            "영종도": "Île de Yeongjong",
+            "인천대교": "Pont d'Incheon",
+            "월미도": "Île de Wolmido", 
+            "인천항": "Port d'Incheon",
+            "송도": "Songdo",
+            "영흥도": "Île de Yeongheung"
+          },
+          ja: {
+            "강화도": "江華島",
+            "영종도": "永宗島",
+            "인천대교": "仁川大橋",
+            "월미도": "月尾島",
+            "인천항": "仁川港",
+            "송도": "松島",
+            "영흥도": "永興島"
+          },
+          zh: {
+            "강화도": "江华岛",
+            "영종도": "永宗岛", 
+            "인천대교": "仁川大桥",
+            "월미도": "月尾岛",
+            "인천항": "仁川港",
+            "송도": "松岛",
+            "영흥도": "永兴岛"
+          },
+          es: {
+            "강화도": "Isla Ganghwa",
+            "영종도": "Isla Yeongjong",
+            "인천대교": "Puente Incheon",
+            "월미도": "Isla Wolmido",
+            "인천항": "Puerto Incheon", 
+            "송도": "Songdo",
+            "영흥도": "Isla Yeongheung"
+          }
+        };
+        return areaNames[currentLanguage]?.[area] || areaNames['ko'][area] || area;
+      }
+
+      function getStatusName(status) {
+        const names = {
+          ko: {
+            review: "검토",
+            negotiation: "협상",
+            resolved: "해결",
+          },
+          en: {
+            review: "Review",
+            negotiation: "Negotiation",
+            resolved: "Resolved",
+          },
+          fr: {
+            review: "Examen",
+            negotiation: "Négociation",
+            resolved: "Résolu",
+          },
+          ja: {
+            review: "検討",
+            negotiation: "交渉",
+            resolved: "解決",
+          },
+          zh: {
+            review: "审查",
+            negotiation: "谈判",
+            resolved: "已解决",
+          },
+          es: {
+            review: "Revisión",
+            negotiation: "Negociación",
+            resolved: "Resuelto",
+          }
+        };
+        return names[currentLanguage]?.[status] || names['ko'][status] || status;
+      }
 
         // Page Navigation
         function showPage(pageName) {
@@ -3264,11 +3686,27 @@
          function updateLoadMoreButton() {
         const loadMoreBtn = document.getElementById("loadMoreBtn");
              if (currentDisplayCount >= maxDisplayCount) {
-          loadMoreBtn.textContent = "🎯 최대 15개까지 표시됨";
+          const maxTexts = {
+            ko: "🎯 최대 15개까지 표시됨",
+            en: "🎯 Maximum 15 displayed",
+            fr: "🎯 Maximum 15 affichés",
+            ja: "🎯 最大15件まで表示",
+            zh: "🎯 最多显示15个",
+            es: "🎯 Máximo 15 mostrados"
+          };
+          loadMoreBtn.textContent = maxTexts[currentLanguage] || maxTexts['ko'];
                  loadMoreBtn.disabled = true;
              } else {
                  const remaining = Math.min(3, maxDisplayCount - currentDisplayCount);
-                 loadMoreBtn.textContent = `🚀 사례 더보기 (${remaining}개씩)`;
+                 const loadMoreTexts = {
+                   ko: `🚀 사례 더보기 (${remaining}개씩)`,
+                   en: `🚀 Load more cases (${remaining} at a time)`,
+                   fr: `🚀 Voir plus de cas (${remaining} par lot)`,
+                   ja: `🚀 事例をもっと見る (${remaining}件ずつ)`,
+                   zh: `🚀 查看更多案例 (每次${remaining}个)`,
+                   es: `🚀 Ver más casos (${remaining} por lote)`
+                 };
+                 loadMoreBtn.textContent = loadMoreTexts[currentLanguage] || loadMoreTexts['ko'];
                  loadMoreBtn.disabled = false;
              }
          }
@@ -4474,6 +4912,15 @@
 
          // Dashboard Charts
          function initDashboard() {
+             // Destroy existing charts
+             const chartIds = ['typeChart', 'yearChart', 'statusChart', 'intensityChart'];
+             chartIds.forEach(id => {
+                 const existingChart = Chart.getChart(id);
+                 if (existingChart) {
+                     existingChart.destroy();
+                 }
+             });
+             
              // Type Chart
         const typeCtx = document.getElementById("typeChart").getContext("2d");
              const typeData = {};
@@ -4524,7 +4971,7 @@
                      labels: Object.keys(yearData),
             datasets: [
               {
-                label: "갈등 발생 건수",
+                label: getChartLabel("numberOfConflicts"),
                          data: Object.values(yearData),
                 borderColor: "#60a5fa",
                 backgroundColor: "rgba(96, 165, 250, 0.1)",
@@ -4568,7 +5015,7 @@
             labels: Object.keys(statusData).map((k) => getStatusName(k)),
             datasets: [
               {
-                label: "건수",
+                label: getChartLabel("numberOfCases"),
                          data: Object.values(statusData),
                 backgroundColor: ["#60a5fa", "#fbbf24", "#22c55e"],
               },
@@ -4606,11 +5053,11 @@
              
              new Chart(intensityCtx, {
           type: "radar",
-                 data: {
-                     labels: Object.keys(areaData),
-            datasets: [
+                data: {
+                    labels: Object.keys(areaData).map(area => getAreaName(area)),
+                    datasets: [
               {
-                label: "갈등 강도",
+                label: getChartLabel("conflictIntensity"),
                          data: Object.values(areaData),
                 borderColor: "#a78bfa",
                 backgroundColor: "rgba(167, 139, 250, 0.1)",
@@ -4667,6 +5114,9 @@
                   },
                   backdropColor: "transparent",
                   showLabelBackdrop: false,
+                  padding: 15,
+                  maxRotation: 0,
+                  minRotation: 0,
                 },
                 angleLines: {
                   color: "rgba(148, 163, 184, 0.1)",
@@ -6368,8 +6818,13 @@
             // Update date formatting based on language
             updateDateFormats();
             
-            // Re-render conflict list with new language
-            renderConflictList();
+        // Re-render conflict list with new language
+        renderConflictList();
+        
+        // Re-render dashboard charts with new language
+        if (typeof initDashboard === 'function') {
+            initDashboard();
+        }
         }
         
         function updateDateFormats() {
