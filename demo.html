@@ -674,6 +674,53 @@
         font-weight: 600;
       }
 
+      .stakeholder-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        justify-content: flex-end;
+      }
+
+      .stakeholder-toggle {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.375rem 0.75rem;
+        background: rgba(148, 163, 184, 0.2);
+        border: 1px solid rgba(148, 163, 184, 0.3);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        user-select: none;
+      }
+
+      .stakeholder-toggle:hover {
+        background: rgba(148, 163, 184, 0.3);
+        transform: translateY(-1px);
+      }
+
+      .stakeholder-toggle.inactive {
+        opacity: 0.4;
+        background: rgba(148, 163, 184, 0.1);
+      }
+
+      .stakeholder-toggle.inactive:hover {
+        opacity: 0.6;
+      }
+
+      .stakeholder-color-box {
+        width: 16px;
+        height: 16px;
+        border-radius: 3px;
+        margin-right: 0.5rem;
+      }
+
+      .stakeholder-name {
+        color: #f1f5f9;
+        font-size: 0.875rem;
+        font-weight: 500;
+      }
+
       .chart-wrapper {
         position: relative;
         height: 300px;
@@ -3155,7 +3202,7 @@
             },
           ];
 
-          new Chart(comparisonCtx, {
+          const stakeholderChart = new Chart(comparisonCtx, {
             type: "bar",
             data: {
               labels: stakeholders,
@@ -3166,17 +3213,7 @@
               maintainAspectRatio: false,
               plugins: {
                 legend: {
-                  labels: {
-                    color: "#f8fafc",
-                    font: {
-                      family: "Noto Sans KR, sans-serif",
-                      size: 14,
-                      weight: "500",
-                    },
-                    padding: 20,
-                    usePointStyle: true,
-                    pointStyle: "rect",
-                  },
+                  display: false, // Hide default legend, we'll use custom one
                 },
               },
               scales: {
@@ -3213,10 +3250,104 @@
                     color: "rgba(148, 163, 184, 0.1)",
                     lineWidth: 1,
                   },
+                  barPercentage: 0.8,
+                  categoryPercentage: 0.8,
                 },
               },
             },
           });
+
+          // Create custom stakeholder legend
+          const legendContainer = document.getElementById("stakeholderLegend");
+          if (legendContainer) {
+            legendContainer.innerHTML = "";
+
+            stakeholders.forEach((stakeholder, index) => {
+              const toggleItem = document.createElement("div");
+              toggleItem.className = "stakeholder-toggle";
+              toggleItem.dataset.stakeholder = stakeholder;
+              toggleItem.dataset.index = index;
+
+              const colorBox = document.createElement("div");
+              colorBox.className = "stakeholder-color-box";
+              // Use a color based on index (you can customize this)
+              const colors = [
+                "#3b82f6",
+                "#ef4444",
+                "#10b981",
+                "#f59e0b",
+                "#8b5cf6",
+                "#ec4899",
+              ];
+              colorBox.style.backgroundColor = colors[index % colors.length];
+
+              const nameSpan = document.createElement("span");
+              nameSpan.className = "stakeholder-name";
+              nameSpan.textContent = stakeholder;
+
+              toggleItem.appendChild(colorBox);
+              toggleItem.appendChild(nameSpan);
+
+              // Add click handler to toggle stakeholder visibility
+              toggleItem.addEventListener("click", function () {
+                const isActive = !this.classList.contains("inactive");
+
+                if (isActive) {
+                  this.classList.add("inactive");
+                } else {
+                  this.classList.remove("inactive");
+                }
+
+                // Get visible stakeholders
+                const visibleStakeholders = [];
+
+                stakeholders.forEach((stakeholder, idx) => {
+                  const toggleElement = legendContainer.children[idx];
+                  if (!toggleElement.classList.contains("inactive")) {
+                    visibleStakeholders.push(stakeholder);
+                  }
+                });
+
+                // Update chart data with only visible stakeholders
+                stakeholderChart.data.labels = visibleStakeholders;
+
+                stakeholderChart.data.datasets.forEach(
+                  (dataset, datasetIndex) => {
+                    const valueType = [
+                      "environment",
+                      "economic",
+                      "residential",
+                      "cultural",
+                      "traffic",
+                    ][datasetIndex];
+                    dataset.data = visibleStakeholders.map(
+                      (stakeholder) =>
+                        stakeholderAverages[stakeholder][valueType]
+                    );
+                  }
+                );
+
+                // Adjust bar width based on visible stakeholders
+                const totalStakeholders = stakeholders.length;
+                const visibleCount = visibleStakeholders.length;
+                const widthMultiplier = totalStakeholders / visibleCount;
+
+                // Update bar percentage to make remaining bars wider
+                stakeholderChart.options.scales.x.barPercentage = Math.min(
+                  0.8 * widthMultiplier,
+                  1.0
+                );
+                stakeholderChart.options.scales.x.categoryPercentage = Math.min(
+                  0.8 * widthMultiplier,
+                  1.0
+                );
+
+                stakeholderChart.update();
+              });
+
+              legendContainer.appendChild(toggleItem);
+            });
+          }
         }
       }
 
@@ -3385,27 +3516,30 @@
                     </div>
                 </div>
                 
-                                 <div class="detail-section">
-                     <h4>📈 가치판단 결과 분석</h4>
-                     <div class="charts-container">
-                         <div class="chart-item">
-                             <h5>전체 평균 vs 나의 가치판단</h5>
-                             <div class="chart-wrapper">
-                                 <canvas id="overallRadarChart"></canvas>
-                             </div>
-                             <div id="comparisonAnalysis" class="comparison-analysis">
-                                 <!-- Comparison analysis will be populated by JavaScript -->
-                             </div>
-                         </div>
-                         
-                         <div class="chart-item">
-                             <h5>이해관계자별 가치 비교</h5>
-                             <div class="chart-wrapper">
-                                 <canvas id="stakeholderComparisonChart"></canvas>
-                             </div>
-                         </div>
-                     </div>
-                 </div>
+                <div class="detail-section">
+                    <h4>📈 가치판단 결과 분석</h4>
+                    <div class="charts-container">
+                        <div class="chart-item">
+                            <h5>전체 평균 vs 나의 가치판단</h5>
+                            <div class="chart-wrapper">
+                                <canvas id="overallRadarChart"></canvas>
+                            </div>
+                            <div id="comparisonAnalysis" class="comparison-analysis">
+                                <!-- Comparison analysis will be populated by JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="chart-item">
+                            <h5>이해관계자별 가치 비교</h5>
+                            <div id="stakeholderLegend" class="stakeholder-legend">
+                                <!-- Stakeholder toggles will be populated by JavaScript -->
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="stakeholderComparisonChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                  
                  <div class="detail-section">
                      <h4>💬 커뮤니티 토론</h4>
