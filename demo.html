@@ -1415,6 +1415,14 @@
                 >대시보드</a
               >
             </li>
+            <li>
+              <a
+                href="#"
+                onclick="showPage('followup')"
+                data-i18n="nav.followup"
+                >후속 평가</a
+              >
+            </li>
                 </ul>
                 <div class="language-selector">
                     <button class="language-btn" onclick="toggleLanguageDropdown()">
@@ -1682,6 +1690,63 @@
               </div>
             </div>
           </div>
+
+            <!-- Follow-up Evaluation Page -->
+            <div id="followup-page" class="page">
+                <h2 style="margin-bottom: 1.5rem; color: #f1f5f9" data-i18n="nav.followup">
+                    📋 후속 평가
+                </h2>
+                
+                <!-- Map Section -->
+                <div class="map-section">
+                    <div id="followupMap" class="map-container"></div>
+                </div>
+                
+                <!-- Statistics Section -->
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="followupTotalConflicts">0</div>
+                                <div class="stat-label" data-i18n="stats.totalConflicts">총 갈등 건수</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="followupResolvedConflicts">0</div>
+                                <div class="stat-label" data-i18n="stats.resolvedConflicts">해결된 갈등</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🔄</div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="followupOngoingConflicts">0</div>
+                                <div class="stat-label" data-i18n="stats.ongoingConflicts">진행 중인 갈등</div>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-content">
+                                <div class="stat-number" id="followupParticipants">0</div>
+                                <div class="stat-label" data-i18n="stats.participants">참여자 수</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Cases Section -->
+                <div class="recent-cases-section">
+                    <h3 data-i18n="followup.recentResolvedCases">최근 해결된 갈등 사례</h3>
+                    <div class="conflict-list" id="followupCasesGrid">
+                        <!-- Cases will be populated by JavaScript -->
+                    </div>
+                    <button class="load-more-btn" onclick="loadMoreFollowupCases()" data-i18n="followup.loadMore">
+                        🚀 사례 더보기 (3개씩)
+                    </button>
+                </div>
+            </div>
 
     <!-- Detail Modal -->
     <div id="detailModal" class="modal">
@@ -2050,10 +2115,11 @@
                 id: 2,
                 conflictKey: "yeongheung",
                 type: "economic",
-                status: "negotiation",
+                status: "resolved",
                 location: [37.2345, 126.1234],
                 intensity: 7,
                 startDate: "2023-02-20",
+                completionDate: "2024-03-15",
                 area: "영흥도",
                 stakeholders: [
                     { nameKey: "fishermen", type: "시민" },
@@ -2065,6 +2131,7 @@
                     { date: "2023-02-20", eventKey: "planAnnouncement" },
                     { date: "2023-04-15", eventKey: "oppositionStart" },
                     { date: "2023-07-30", eventKey: "compensationStart" },
+                    { date: "2024-03-15", eventKey: "negotiationComplete" },
             { date: "2023-10-12", eventKey: "ongoing" },
                 ],
                 documents: [
@@ -2266,10 +2333,11 @@
                 id: 5,
                 conflictKey: "wolmido",
                 type: "cultural",
-                status: "negotiation",
+                status: "resolved",
           location: [37.4567, 126.589],
                 intensity: 5,
                 startDate: "2023-05-15",
+                completionDate: "2024-02-28",
                 area: "월미도",
                 cause: "관광지 개발로 인한 문화유산 훼손 우려",
                 stakeholders: [
@@ -2282,6 +2350,7 @@
                     { date: "2023-05-15", event: "관광지 개발 계획 발표" },
                     { date: "2023-07-20", event: "문화재 영향 조사" },
                     { date: "2023-09-10", event: "문화유산보호단체 반대" },
+                    { date: "2024-02-28", event: "협상 완료" },
             { date: "2023-12-05", event: "개발 계획 수정" },
                 ],
                 documents: [
@@ -2340,10 +2409,11 @@
                 id: 6,
                 conflictKey: "incheonBridge",
                 type: "traffic",
-                status: "negotiation",
+                status: "resolved",
                 location: [37.4561, 126.7052],
                 intensity: 6,
                 startDate: "2023-06-20",
+                completionDate: "2024-01-15",
                 area: "인천대교",
                 cause: "교통 혼잡과 환경 영향 우려",
                 stakeholders: [
@@ -2356,6 +2426,7 @@
                     { date: "2023-06-20", event: "대교 확장 계획 발표" },
                     { date: "2023-08-15", event: "환경영향평가 착수" },
                     { date: "2023-10-30", event: "주민 설명회 개최" },
+                    { date: "2024-01-15", event: "협상 완료" },
             { date: "2023-12-20", event: "공사 착수" },
                 ],
                 documents: [
@@ -3650,6 +3721,8 @@
             
         if (pageName === "dashboard") {
                 initDashboard();
+            } else if (pageName === "followup") {
+                initFollowupPage();
             }
         }
 
@@ -4230,31 +4303,33 @@
             body.innerHTML = `
                 <div class="dropdown-section">
                     <div class="dropdown-header" onclick="toggleDropdown(this)">
-                        <h4 class="dropdown-title">📋 기본 정보</h4>
+                        <h4 class="dropdown-title">${t('modal.basicInfo')}</h4>
                         <span class="dropdown-icon">▼</span>
                     </div>
                     <div class="dropdown-content active">
                         <div class="info-grid">
                             <div class="info-item">
-                                <div class="info-label">유형</div>
+                                <div class="info-label">${t('modal.type')}</div>
                                 <div class="info-value">${getTypeName(conflict.type)}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">상태</div>
+                                <div class="info-label">${t('modal.status')}</div>
                                 <div class="info-value">${getStatusName(conflict.status)}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">지역</div>
+                                <div class="info-label">${t('modal.area')}</div>
                                 <div class="info-value">${conflict.area}</div>
                             </div>
                             <div class="info-item">
-                                <div class="info-label">시작일</div>
+                                <div class="info-label">${t('modal.startDate')}</div>
                                 <div class="info-value">${conflict.startDate}</div>
                             </div>
+                            ${conflict.completionDate ? `
                             <div class="info-item">
-                                <div class="info-label">갈등 강도</div>
-                                <div class="info-value">${conflict.intensity}/10</div>
+                                <div class="info-label">${t('modal.completionDate')}</div>
+                                <div class="info-value">${conflict.completionDate}</div>
                             </div>
+                            ` : ''}
                         </div>
                     </div>
                 </div>
@@ -4294,42 +4369,42 @@
                 <div class="detail-section">
                     <h4>📄 관련 문서</h4>
                     ${conflict.documents
-                      .map(
+                      ?.map(
                         (d) => `
                         <p><a href="${d.url}" style="color: #60a5fa;">${d.name}</a></p>
                     `
                       )
-                      .join("")}
+                      ?.join("") || '<p>관련 문서가 없습니다.</p>'}
                 </div>
                 
                 <div class="detail-section">
                     <h4>🤖 AI 분석</h4>
-                    <p><strong>요약:</strong> ${conflict.aiAnalysis.summary}</p>
+                    <p><strong>요약:</strong> ${conflict.aiAnalysis?.summary || 'AI 분석 데이터가 없습니다.'}</p>
                     <p><strong>감정:</strong> ${
-                      conflict.aiAnalysis.sentiment
+                      conflict.aiAnalysis?.sentiment || '분석 중'
                     }</p>
                     <p><strong>권장사항:</strong></p>
                     <ul>
-                        ${conflict.aiAnalysis.recommendations
-                          .map((r) => `<li>${r}</li>`)
-                          .join("")}
+                        ${conflict.aiAnalysis?.recommendations
+                          ?.map((r) => `<li>${r}</li>`)
+                          ?.join("") || '<li>권장사항이 없습니다.</li>'}
                     </ul>
                 </div>
                 
                 <div class="detail-section">
-                    <h4>📊 나의 가치판단 참여하기</h4>
+                    <h4>📊 나의 후속가치판단 참여하기</h4>
                     <div class="value-judgment-form">
                         <div class="form-group">
                             <label for="stakeholderSelect">나의 이해관계자 유형:</label>
                             <select id="stakeholderSelect" class="form-select">
                                 <option value="">선택해주세요</option>
                                 ${conflict.stakeholders
-                                  .map(
+                                  ?.map(
                                     (s) => `
                                     <option value="${s.name}">${s.name} (${s.type})</option>
                                 `
                                   )
-                                  .join("")}
+                                  ?.join("") || '<option value="">이해관계자 정보가 없습니다.</option>'}
                             </select>
                         </div>
                         
@@ -4407,58 +4482,6 @@
                          </div>
                      </div>
                  </div>
-                 
-                 <div class="detail-section">
-                     <h4>💬 커뮤니티 토론</h4>
-                     <div class="community-container">
-                         <div class="community-header">
-                             <div class="community-stats">
-                                 <span class="stat-item">💬 <span id="commentCount">0</span>개의 댓글</span>
-                                 <span class="stat-item">👥 <span id="participantCount">0</span>명 참여</span>
-                             </div>
-                             <button onclick="showCommentForm()" class="comment-btn">💭 의견 남기기</button>
-                         </div>
-                         
-                         <div id="commentForm" class="comment-form" style="display: none;">
-                             <div class="form-group">
-                                 <label for="commentAuthor">닉네임:</label>
-                                 <input type="text" id="commentAuthor" class="form-input" placeholder="닉네임을 입력하세요" maxlength="20">
-                             </div>
-                             <div class="form-group">
-                                 <label for="commentContent">의견:</label>
-                                 <textarea id="commentContent" class="form-textarea" placeholder="이 갈등에 대한 의견을 자유롭게 남겨주세요..." rows="4" maxlength="500"></textarea>
-                                 <div class="char-count">
-                                     <span id="charCount">0</span>/500
-                                 </div>
-                             </div>
-                             <div class="form-group">
-                                 <label for="commentStakeholder">나의 입장:</label>
-                                 <select id="commentStakeholder" class="form-select">
-                                     <option value="">선택해주세요</option>
-                                     ${conflict.stakeholders
-                                       .map(
-                                         (s) => `
-                                         <option value="${s.name}">${s.name} (${s.type})</option>
-                                     `
-                                       )
-                                       .join("")}
-                                     <option value="일반시민">일반시민</option>
-                                     <option value="관심있는시민">관심있는시민</option>
-                                 </select>
-                             </div>
-                             <div class="form-actions">
-                                 <button onclick="submitComment(${
-                                   conflict.id
-                                 })" class="submit-comment-btn">의견 등록</button>
-                                 <button onclick="hideCommentForm()" class="cancel-btn">취소</button>
-                             </div>
-                         </div>
-                         
-                         <div id="commentsList" class="comments-list">
-                             <!-- Comments will be populated by JavaScript -->
-                         </div>
-                     </div>
-                 </div>
             `;
             
         console.log("Showing modal...");
@@ -4489,6 +4512,9 @@
                 renderValueJudgmentCharts(conflict);
                 renderComparisonAnalysis(conflict);
                 renderComments(conflict);
+                
+                // 모달 번역 적용
+                translatePage();
             }, 100);
         }
 
@@ -4758,7 +4784,7 @@
                            comment.timestamp
                          )}</span>
                      </div>
-                     <div class="comment-content">${comment.content}</div>
+                     <div class="comment-content">${comment.content || '댓글 내용이 없습니다.'}</div>
                      <div class="comment-actions">
                          <button class="action-btn ${
                            comment.liked ? "liked" : ""
@@ -5256,6 +5282,126 @@
              });
          }
 
+         // Follow-up Evaluation Page Functions
+         function initFollowupPage() {
+             console.log('Initializing followup page...');
+             
+             // Initialize followup map
+             initFollowupMap();
+             
+             // Update statistics
+             updateFollowupStats();
+             
+             // Load resolved conflicts
+             loadFollowupCases();
+             
+             // Apply translations
+             translatePage();
+             
+             console.log('Followup page initialized');
+         }
+
+         function initFollowupMap() {
+             // Initialize map for followup page
+             if (window.followupMap) {
+                 window.followupMap.remove();
+             }
+             
+             // Check if Leaflet is available and element exists
+             if (typeof L !== 'undefined' && document.getElementById('followupMap')) {
+                 window.followupMap = L.map('followupMap').setView([37.4563, 126.7052], 11);
+                 
+                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                     attribution: '© OpenStreetMap contributors'
+                 }).addTo(window.followupMap);
+                 
+                 // Add resolved conflicts as markers
+                 const resolvedConflicts = allConflicts.filter(c => c.status === 'resolved');
+                 resolvedConflicts.forEach(conflict => {
+                     const marker = L.marker([conflict.lat, conflict.lng])
+                         .addTo(window.followupMap)
+                         .bindPopup(`
+                             <strong>${conflict.title}</strong><br>
+                             유형: ${getTypeName(conflict.type)}<br>
+                             상태: ${getStatusName(conflict.status)}<br>
+                             완료일: ${conflict.completionDate || '2024-12-01'}
+                         `);
+                     
+                     marker.on('click', () => showFollowupConflictDetail(conflict));
+                 });
+             } else {
+                 console.log('Leaflet not available or followupMap element not found');
+             }
+         }
+
+         function updateFollowupStats() {
+             const totalConflicts = allConflicts.length;
+             const resolvedConflicts = allConflicts.filter(c => c.status === 'resolved').length;
+             const ongoingConflicts = allConflicts.filter(c => c.status === 'ongoing').length;
+             const participants = 1250; // Mock data
+             
+             document.getElementById('followupTotalConflicts').textContent = totalConflicts;
+             document.getElementById('followupResolvedConflicts').textContent = resolvedConflicts;
+             document.getElementById('followupOngoingConflicts').textContent = ongoingConflicts;
+             document.getElementById('followupParticipants').textContent = participants;
+         }
+
+         function loadFollowupCases() {
+             console.log('Loading followup cases...');
+             const container = document.getElementById('followupCasesGrid');
+             console.log('Container found:', container);
+             
+             const resolvedConflicts = allConflicts.filter(c => c.status === 'resolved').slice(0, 6);
+             console.log('Resolved conflicts:', resolvedConflicts);
+             
+             container.innerHTML = '';
+             resolvedConflicts.forEach(conflict => {
+                 const card = document.createElement('div');
+                 card.className = 'conflict-card';
+                 card.onclick = () => showFollowupConflictDetail(conflict);
+                 
+                 card.innerHTML = `
+                     <div class="conflict-type type-${conflict.type}">${getTypeName(conflict.type)}</div>
+                     <div class="conflict-title">${conflict.title}</div>
+                     <div class="conflict-description">${conflict.description}</div>
+                     <div class="conflict-status status-resolved">✅ 해결 완료</div>
+                     <div class="conflict-date">완료일: ${conflict.completionDate || '2024-12-01'}</div>
+                 `;
+                 
+                 container.appendChild(card);
+             });
+             console.log('Followup cases loaded');
+         }
+
+         function loadMoreFollowupCases() {
+             // Load more resolved conflicts
+             const container = document.getElementById('followupCasesGrid');
+             const currentCount = container.children.length;
+             const resolvedConflicts = allConflicts.filter(c => c.status === 'resolved');
+             const nextBatch = resolvedConflicts.slice(currentCount, currentCount + 3);
+             
+             nextBatch.forEach(conflict => {
+                 const card = document.createElement('div');
+                 card.className = 'conflict-card';
+                 card.onclick = () => showFollowupConflictDetail(conflict);
+                 
+                 card.innerHTML = `
+                     <div class="conflict-type type-${conflict.type}">${getTypeName(conflict.type)}</div>
+                     <div class="conflict-title">${conflict.title}</div>
+                     <div class="conflict-description">${conflict.description}</div>
+                     <div class="conflict-status status-resolved">✅ 해결 완료</div>
+                     <div class="conflict-date">완료일: ${conflict.completionDate || '2024-12-01'}</div>
+                 `;
+                 
+                 container.appendChild(card);
+             });
+         }
+
+         function showFollowupConflictDetail(conflict) {
+             // Show conflict detail with followup-specific modifications
+             showConflictDetail(conflict);
+         }
+
                  // Filter Functions
          function filterConflicts(type) {
         const filtered =
@@ -5403,7 +5549,71 @@
                     home: "홈",
                     conflicts: "갈등 현황",
             dashboard: "전체 대시보드",
+            followup: "후속 평가",
             analysis: "AI 분석",
+                },
+                stats: {
+                    totalConflicts: "총 갈등 건수",
+                    resolvedConflicts: "해결된 갈등",
+                    ongoingConflicts: "진행 중인 갈등",
+                    participants: "참여자 수"
+                },
+                followup: {
+                    recentResolvedCases: "최근 해결된 갈등 사례",
+                    loadMore: "🚀 사례 더보기 (3개씩)"
+                },
+                modal: {
+                    conflictDetail: "갈등 상세 정보",
+                    basicInfo: "📋 기본 정보",
+                    type: "유형",
+                    status: "상태",
+                    area: "지역",
+                    startDate: "시작일",
+                    completionDate: "완료일",
+                    cause: "🔍 원인",
+                    causeDefault: "해당 지역에서 발생한 갈등으로, 다양한 이해관계자들의 가치 충돌이 주요 원인입니다.",
+                    stakeholders: "👥 이해관계자",
+                    stakeholderDefault: "이해관계자",
+                    timeline: "📅 진행 과정",
+                    event: "이벤트",
+                    documents: "📄 관련 문서",
+                    noDocuments: "관련 문서가 없습니다.",
+                    aiAnalysis: "🤖 AI 분석",
+                    summary: "요약:",
+                    sentiment: "감정:",
+                    recommendations: "권장사항:",
+                    noAnalysisData: "AI 분석 데이터가 없습니다.",
+                    analyzing: "분석 중",
+                    noRecommendations: "권장사항이 없습니다.",
+                    valueJudgment: "📊 나의 후속가치판단 참여하기",
+                    myStakeholderType: "나의 이해관계자 유형:",
+                    selectStakeholder: "선택해주세요",
+                    generalCitizen: "일반시민",
+                    interestedCitizen: "관심있는시민",
+                    environment: "환경",
+                    economic: "경제",
+                    residential: "주거",
+                    cultural: "문화",
+                    traffic: "교통",
+                    totalPoints: "총 점수",
+                    pointsStatus: "점수 상태",
+                    exactly100Points: "✅ 정확히 100점이 배분되었습니다",
+                    pointsNeeded: "점이 더 필요합니다",
+                    pointsToReduce: "점을 줄여야 합니다",
+                    submitJudgment: "가치판단 제출",
+                    cancel: "취소",
+                    opinionRegistered: "의견이 등록되었습니다",
+                    opinionRegisteredMessage: "귀하의 소중한 의견이 성공적으로 등록되었습니다.",
+                    nextVoteInOneMonth: "다음 투표는 1달 후에 가능합니다.",
+                    nextVoteDate: "다음 투표 가능일",
+                    confirm: "확인",
+                    valueImportanceDelivered: "가치의 중요성이 전달되었습니다!",
+                    valueJudgmentRegistered: "귀하의 가치판단이 성공적으로 등록되었습니다.",
+                    nextVoteInOneMonthValue: "다음 투표는 1달 뒤에 가능합니다.",
+                    note: "💡 참고",
+                    noteMessage: "다른 갈등 사안의 가치판단에는 언제든지 참여하실 수 있습니다.",
+                    valueImportanceDeliveredTitle: "가치의 중요성이 전달되었습니다",
+                    nextVoteInOneMonthTitle: "다음 투표는 한달 뒤 가능합니다"
                 },
                 hero: {
                     title: "인천 해양 갈등 지도 플랫폼",
@@ -5505,7 +5715,7 @@
                     timeline: "📅 진행 과정",
                     documents: "📄 관련 문서",
                     aiAnalysis: "🤖 AI 분석",
-                    valueJudgment: "📊 나의 가치판단 참여하기",
+                    valueJudgment: "📊 나의 후속가치판단 참여하기",
                     community: "💬 커뮤니티 토론",
                     type: "유형",
                     status: "상태",
@@ -5644,7 +5854,71 @@
                     home: "Home",
                     conflicts: "Conflicts",
                     dashboard: "Dashboard",
-            analysis: "AI Analysis",
+                    followup: "Follow-up Evaluation",
+                    analysis: "AI Analysis",
+                },
+                stats: {
+                    totalConflicts: "Total Conflicts",
+                    resolvedConflicts: "Resolved Conflicts",
+                    ongoingConflicts: "Ongoing Conflicts",
+                    participants: "Participants"
+                },
+                followup: {
+                    recentResolvedCases: "Recent Resolved Conflicts",
+                    loadMore: "🚀 Load More Cases (3 at a time)"
+                },
+                modal: {
+                    conflictDetail: "Conflict Details",
+                    basicInfo: "📋 Basic Information",
+                    type: "Type",
+                    status: "Status",
+                    area: "Area",
+                    startDate: "Start Date",
+                    completionDate: "Completion Date",
+                    cause: "🔍 Cause",
+                    causeDefault: "Conflict in this area caused by value conflicts among various stakeholders.",
+                    stakeholders: "👥 Stakeholders",
+                    stakeholderDefault: "Stakeholder",
+                    timeline: "📅 Timeline",
+                    event: "Event",
+                    documents: "📄 Related Documents",
+                    noDocuments: "No related documents.",
+                    aiAnalysis: "🤖 AI Analysis",
+                    summary: "Summary:",
+                    sentiment: "Sentiment:",
+                    recommendations: "Recommendations:",
+                    noAnalysisData: "No AI analysis data available.",
+                    analyzing: "Analyzing",
+                    noRecommendations: "No recommendations available.",
+                    valueJudgment: "📊 Participate in Follow-up Value Judgment",
+                    myStakeholderType: "My Stakeholder Type:",
+                    selectStakeholder: "Please select",
+                    generalCitizen: "General Citizen",
+                    interestedCitizen: "Interested Citizen",
+                    environment: "Environment",
+                    economic: "Economic",
+                    residential: "Residential",
+                    cultural: "Cultural",
+                    traffic: "Traffic",
+                    totalPoints: "Total Points",
+                    pointsStatus: "Points Status",
+                    exactly100Points: "✅ Exactly 100 points allocated",
+                    pointsNeeded: "points needed",
+                    pointsToReduce: "points to reduce",
+                    submitJudgment: "Submit Value Judgment",
+                    cancel: "Cancel",
+                    opinionRegistered: "Opinion Registered",
+                    opinionRegisteredMessage: "Your valuable opinion has been successfully registered.",
+                    nextVoteInOneMonth: "Next vote available in one month.",
+                    nextVoteDate: "Next Vote Date",
+                    confirm: "Confirm",
+                    valueImportanceDelivered: "Value Importance Delivered!",
+                    valueJudgmentRegistered: "Your value judgment has been successfully registered.",
+                    nextVoteInOneMonthValue: "Next vote available in one month.",
+                    note: "💡 Note",
+                    noteMessage: "You can participate in value judgments for other conflicts at any time.",
+                    valueImportanceDeliveredTitle: "Value Importance Delivered",
+                    nextVoteInOneMonthTitle: "Next vote available in one month"
                 },
                 hero: {
                     title: "Incheon Marine Conflict Map Platform",
@@ -5877,7 +6151,71 @@
                     home: "Accueil",
                     conflicts: "Conflits",
                     dashboard: "Tableau de bord",
-            analysis: "Analyse IA",
+                    followup: "Évaluation de suivi",
+                    analysis: "Analyse IA",
+                },
+                stats: {
+                    totalConflicts: "Total des Conflits",
+                    resolvedConflicts: "Conflits Résolus",
+                    ongoingConflicts: "Conflits en Cours",
+                    participants: "Participants"
+                },
+                followup: {
+                    recentResolvedCases: "Conflits Récemment Résolus",
+                    loadMore: "🚀 Voir Plus de Cas (3 à la fois)"
+                },
+                modal: {
+                    conflictDetail: "Détails du Conflit",
+                    basicInfo: "📋 Informations de Base",
+                    type: "Type",
+                    status: "Statut",
+                    area: "Zone",
+                    startDate: "Date de Début",
+                    completionDate: "Date d'Achèvement",
+                    cause: "🔍 Cause",
+                    causeDefault: "Conflit dans cette zone causé par des conflits de valeurs entre diverses parties prenantes.",
+                    stakeholders: "👥 Parties Prenantes",
+                    stakeholderDefault: "Partie Prenante",
+                    timeline: "📅 Chronologie",
+                    event: "Événement",
+                    documents: "📄 Documents Connexes",
+                    noDocuments: "Aucun document connexe.",
+                    aiAnalysis: "🤖 Analyse IA",
+                    summary: "Résumé:",
+                    sentiment: "Sentiment:",
+                    recommendations: "Recommandations:",
+                    noAnalysisData: "Aucune donnée d'analyse IA disponible.",
+                    analyzing: "Analyse en cours",
+                    noRecommendations: "Aucune recommandation disponible.",
+                    valueJudgment: "📊 Participer au Jugement de Valeur de Suivi",
+                    myStakeholderType: "Mon Type de Partie Prenante:",
+                    selectStakeholder: "Veuillez sélectionner",
+                    generalCitizen: "Citoyen Général",
+                    interestedCitizen: "Citoyen Intéressé",
+                    environment: "Environnement",
+                    economic: "Économique",
+                    residential: "Résidentiel",
+                    cultural: "Culturel",
+                    traffic: "Transport",
+                    totalPoints: "Points Totaux",
+                    pointsStatus: "Statut des Points",
+                    exactly100Points: "✅ Exactement 100 points alloués",
+                    pointsNeeded: "points nécessaires",
+                    pointsToReduce: "points à réduire",
+                    submitJudgment: "Soumettre le Jugement de Valeur",
+                    cancel: "Annuler",
+                    opinionRegistered: "Opinion Enregistrée",
+                    opinionRegisteredMessage: "Votre opinion précieuse a été enregistrée avec succès.",
+                    nextVoteInOneMonth: "Prochain vote disponible dans un mois.",
+                    nextVoteDate: "Date du Prochain Vote",
+                    confirm: "Confirmer",
+                    valueImportanceDelivered: "Importance de la Valeur Transmise!",
+                    valueJudgmentRegistered: "Votre jugement de valeur a été enregistré avec succès.",
+                    nextVoteInOneMonthValue: "Prochain vote disponible dans un mois.",
+                    note: "💡 Note",
+                    noteMessage: "Vous pouvez participer aux jugements de valeur pour d'autres conflits à tout moment.",
+                    valueImportanceDeliveredTitle: "Importance de la Valeur Transmise",
+                    nextVoteInOneMonthTitle: "Prochain vote disponible dans un mois"
                 },
                 hero: {
                     title: "Plateforme de Carte des Conflits Marins d'Incheon",
@@ -6115,7 +6453,71 @@
                     home: "ホーム",
                     conflicts: "紛争状況",
                     dashboard: "ダッシュボード",
-            analysis: "AI分析",
+                    followup: "フォローアップ評価",
+                    analysis: "AI分析",
+                },
+                stats: {
+                    totalConflicts: "総紛争件数",
+                    resolvedConflicts: "解決済み紛争",
+                    ongoingConflicts: "進行中紛争",
+                    participants: "参加者数"
+                },
+                followup: {
+                    recentResolvedCases: "最近解決された紛争事例",
+                    loadMore: "🚀 事例をもっと見る (3件ずつ)"
+                },
+                modal: {
+                    conflictDetail: "紛争詳細情報",
+                    basicInfo: "📋 基本情報",
+                    type: "種類",
+                    status: "状態",
+                    area: "地域",
+                    startDate: "開始日",
+                    completionDate: "完了日",
+                    cause: "🔍 原因",
+                    causeDefault: "この地域で発生した紛争で、様々な利害関係者の価値観の衝突が主な原因です。",
+                    stakeholders: "👥 利害関係者",
+                    stakeholderDefault: "利害関係者",
+                    timeline: "📅 進行過程",
+                    event: "イベント",
+                    documents: "📄 関連文書",
+                    noDocuments: "関連文書がありません。",
+                    aiAnalysis: "🤖 AI分析",
+                    summary: "要約:",
+                    sentiment: "感情:",
+                    recommendations: "推奨事項:",
+                    noAnalysisData: "AI分析データがありません。",
+                    analyzing: "分析中",
+                    noRecommendations: "推奨事項がありません。",
+                    valueJudgment: "📊 フォローアップ価値判断に参加",
+                    myStakeholderType: "私の利害関係者タイプ:",
+                    selectStakeholder: "選択してください",
+                    generalCitizen: "一般市民",
+                    interestedCitizen: "関心のある市民",
+                    environment: "環境",
+                    economic: "経済",
+                    residential: "住宅",
+                    cultural: "文化",
+                    traffic: "交通",
+                    totalPoints: "総点数",
+                    pointsStatus: "点数状態",
+                    exactly100Points: "✅ 正確に100点が配分されました",
+                    pointsNeeded: "点が必要です",
+                    pointsToReduce: "点を減らす必要があります",
+                    submitJudgment: "価値判断を提出",
+                    cancel: "キャンセル",
+                    opinionRegistered: "意見が登録されました",
+                    opinionRegisteredMessage: "貴重なご意見が正常に登録されました。",
+                    nextVoteInOneMonth: "次の投票は1ヶ月後に可能です。",
+                    nextVoteDate: "次の投票可能日",
+                    confirm: "確認",
+                    valueImportanceDelivered: "価値の重要性が伝達されました！",
+                    valueJudgmentRegistered: "あなたの価値判断が正常に登録されました。",
+                    nextVoteInOneMonthValue: "次の投票は1ヶ月後に可能です。",
+                    note: "💡 参考",
+                    noteMessage: "他の紛争案件の価値判断にはいつでも参加できます。",
+                    valueImportanceDeliveredTitle: "価値の重要性が伝達されました",
+                    nextVoteInOneMonthTitle: "次の投票は1ヶ月後に可能です"
                 },
                 hero: {
                     title: "仁川海洋紛争マッププラットフォーム",
@@ -6327,7 +6729,71 @@
                     home: "首页",
                     conflicts: "冲突状况",
                     dashboard: "仪表板",
-            analysis: "AI分析",
+                    followup: "后续评估",
+                    analysis: "AI分析",
+                },
+                stats: {
+                    totalConflicts: "总冲突数",
+                    resolvedConflicts: "已解决冲突",
+                    ongoingConflicts: "进行中冲突",
+                    participants: "参与者数量"
+                },
+                followup: {
+                    recentResolvedCases: "最近解决的冲突案例",
+                    loadMore: "🚀 查看更多案例 (每次3个)"
+                },
+                modal: {
+                    conflictDetail: "冲突详细信息",
+                    basicInfo: "📋 基本信息",
+                    type: "类型",
+                    status: "状态",
+                    area: "地区",
+                    startDate: "开始日期",
+                    completionDate: "完成日期",
+                    cause: "🔍 原因",
+                    causeDefault: "该地区发生的冲突，主要由各种利益相关者的价值观冲突引起。",
+                    stakeholders: "👥 利益相关者",
+                    stakeholderDefault: "利益相关者",
+                    timeline: "📅 进展过程",
+                    event: "事件",
+                    documents: "📄 相关文档",
+                    noDocuments: "没有相关文档。",
+                    aiAnalysis: "🤖 AI分析",
+                    summary: "摘要:",
+                    sentiment: "情感:",
+                    recommendations: "建议:",
+                    noAnalysisData: "没有AI分析数据。",
+                    analyzing: "分析中",
+                    noRecommendations: "没有建议。",
+                    valueJudgment: "📊 参与后续价值判断",
+                    myStakeholderType: "我的利益相关者类型:",
+                    selectStakeholder: "请选择",
+                    generalCitizen: "普通公民",
+                    interestedCitizen: "感兴趣的公民",
+                    environment: "环境",
+                    economic: "经济",
+                    residential: "住宅",
+                    cultural: "文化",
+                    traffic: "交通",
+                    totalPoints: "总分数",
+                    pointsStatus: "分数状态",
+                    exactly100Points: "✅ 准确分配了100分",
+                    pointsNeeded: "分需要",
+                    pointsToReduce: "分需要减少",
+                    submitJudgment: "提交价值判断",
+                    cancel: "取消",
+                    opinionRegistered: "意见已注册",
+                    opinionRegisteredMessage: "您宝贵的意见已成功注册。",
+                    nextVoteInOneMonth: "下次投票一个月后可用。",
+                    nextVoteDate: "下次投票日期",
+                    confirm: "确认",
+                    valueImportanceDelivered: "价值重要性已传达！",
+                    valueJudgmentRegistered: "您的价值判断已成功注册。",
+                    nextVoteInOneMonthValue: "下次投票一个月后可用。",
+                    note: "💡 注意",
+                    noteMessage: "您可以随时参与其他冲突的价值判断。",
+                    valueImportanceDeliveredTitle: "价值重要性已传达",
+                    nextVoteInOneMonthTitle: "下次投票一个月后可用"
                 },
                 hero: {
                     title: "仁川海洋冲突地图平台",
@@ -6535,7 +7001,71 @@
                     home: "Inicio",
                     conflicts: "Conflictos",
                     dashboard: "Panel",
-            analysis: "Análisis IA",
+                    followup: "Evaluación de seguimiento",
+                    analysis: "Análisis IA",
+                },
+                stats: {
+                    totalConflicts: "Total de Conflictos",
+                    resolvedConflicts: "Conflictos Resueltos",
+                    ongoingConflicts: "Conflictos en Curso",
+                    participants: "Participantes"
+                },
+                followup: {
+                    recentResolvedCases: "Conflictos Recientemente Resueltos",
+                    loadMore: "🚀 Ver Más Casos (3 a la vez)"
+                },
+                modal: {
+                    conflictDetail: "Detalles del Conflicto",
+                    basicInfo: "📋 Información Básica",
+                    type: "Tipo",
+                    status: "Estado",
+                    area: "Área",
+                    startDate: "Fecha de Inicio",
+                    completionDate: "Fecha de Finalización",
+                    cause: "🔍 Causa",
+                    causeDefault: "Conflicto en esta área causado por conflictos de valores entre varias partes interesadas.",
+                    stakeholders: "👥 Partes Interesadas",
+                    stakeholderDefault: "Parte Interesada",
+                    timeline: "📅 Cronología",
+                    event: "Evento",
+                    documents: "📄 Documentos Relacionados",
+                    noDocuments: "No hay documentos relacionados.",
+                    aiAnalysis: "🤖 Análisis IA",
+                    summary: "Resumen:",
+                    sentiment: "Sentimiento:",
+                    recommendations: "Recomendaciones:",
+                    noAnalysisData: "No hay datos de análisis IA disponibles.",
+                    analyzing: "Analizando",
+                    noRecommendations: "No hay recomendaciones disponibles.",
+                    valueJudgment: "📊 Participar en Juicio de Valor de Seguimiento",
+                    myStakeholderType: "Mi Tipo de Parte Interesada:",
+                    selectStakeholder: "Por favor seleccione",
+                    generalCitizen: "Ciudadano General",
+                    interestedCitizen: "Ciudadano Interesado",
+                    environment: "Medio Ambiente",
+                    economic: "Económico",
+                    residential: "Residencial",
+                    cultural: "Cultural",
+                    traffic: "Tráfico",
+                    totalPoints: "Puntos Totales",
+                    pointsStatus: "Estado de Puntos",
+                    exactly100Points: "✅ Exactamente 100 puntos asignados",
+                    pointsNeeded: "puntos necesarios",
+                    pointsToReduce: "puntos a reducir",
+                    submitJudgment: "Enviar Juicio de Valor",
+                    cancel: "Cancelar",
+                    opinionRegistered: "Opinión Registrada",
+                    opinionRegisteredMessage: "Su valiosa opinión ha sido registrada exitosamente.",
+                    nextVoteInOneMonth: "Próxima votación disponible en un mes.",
+                    nextVoteDate: "Fecha de Próxima Votación",
+                    confirm: "Confirmar",
+                    valueImportanceDelivered: "¡Importancia del Valor Entregada!",
+                    valueJudgmentRegistered: "Su juicio de valor ha sido registrado exitosamente.",
+                    nextVoteInOneMonthValue: "Próxima votación disponible en un mes.",
+                    note: "💡 Nota",
+                    noteMessage: "Puede participar en juicios de valor para otros conflictos en cualquier momento.",
+                    valueImportanceDeliveredTitle: "Importancia del Valor Entregada",
+                    nextVoteInOneMonthTitle: "Próxima votación disponible en un mes"
                 },
                 hero: {
                     title: "Plataforma de Mapa de Conflictos Marinos de Incheon",
@@ -6752,6 +7282,18 @@
           },
         },
         };
+        
+        // Translation helper function
+        function t(key) {
+            const keys = key.split('.');
+            let value = translations[currentLanguage];
+            
+            for (const k of keys) {
+                value = value[k];
+            }
+            
+            return value || key;
+        }
         
         function toggleLanguageDropdown() {
         const dropdown = document.getElementById("languageDropdown");
