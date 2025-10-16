@@ -4171,6 +4171,12 @@
                 borderColor: "#a78bfa",
                 backgroundColor: "rgba(167, 139, 250, 0.1)",
                 pointBackgroundColor: "#a78bfa",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 2,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                borderWidth: 2,
+                tension: 0.1,
               },
             ],
           },
@@ -4179,14 +4185,49 @@
             maintainAspectRatio: false,
             plugins: {
               legend: {
-                labels: { color: "#f8fafc" },
+                labels: {
+                  color: "#f8fafc",
+                  font: {
+                    family: "Noto Sans KR, sans-serif",
+                    size: 14,
+                    weight: "500",
+                  },
+                  padding: 20,
+                  usePointStyle: true,
+                  pointStyle: "rect",
+                },
               },
             },
             scales: {
               r: {
-                ticks: { color: "#f8fafc" },
-                grid: { color: "rgba(148, 163, 184, 0.2)" },
-                pointLabels: { color: "#f8fafc" },
+                ticks: {
+                  color: "#cbd5e1",
+                  font: {
+                    family: "Noto Sans KR, sans-serif",
+                    size: 12,
+                    weight: "400",
+                  },
+                  backdropColor: "transparent",
+                  showLabelBackdrop: false,
+                },
+                grid: {
+                  color: "rgba(148, 163, 184, 0.15)",
+                  lineWidth: 1,
+                },
+                pointLabels: {
+                  color: "#f1f5f9",
+                  font: {
+                    family: "Noto Sans KR, sans-serif",
+                    size: 12,
+                    weight: "500",
+                  },
+                  backdropColor: "transparent",
+                  showLabelBackdrop: false,
+                },
+                angleLines: {
+                  color: "rgba(148, 163, 184, 0.1)",
+                  lineWidth: 1,
+                },
               },
             },
           },
@@ -4467,7 +4508,7 @@
           nav: {
             home: "홈",
             conflicts: "갈등 현황",
-            dashboard: "대시보드",
+            dashboard: "전체 대시보드",
             analysis: "AI 분석",
           },
           hero: {
