@@ -143,6 +143,151 @@
             border-left-color: #60a5fa;
         }
         
+        /* 햄버거 메뉴 스타일 */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1001;
+        }
+        
+        .hamburger-menu span {
+            width: 100%;
+            height: 3px;
+            background: #60a5fa;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: center;
+        }
+        
+        .hamburger-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* 데스크톱 네비게이션 */
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        /* 모바일 메뉴 */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(59, 130, 246, 0.3);
+            padding: 1rem;
+            z-index: 1000;
+        }
+        
+        .mobile-menu.show {
+            display: block;
+        }
+        
+        .mobile-nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            margin-bottom: 1rem;
+        }
+        
+        .mobile-nav-links li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .mobile-nav-links a {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-nav-links a:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+        }
+        
+        .mobile-language-selector {
+            border-top: 1px solid rgba(59, 130, 246, 0.3);
+            padding-top: 1rem;
+        }
+        
+        .mobile-language-btn {
+            width: 100%;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .mobile-language-btn:hover {
+            background: rgba(59, 130, 246, 0.2);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+        
+        .mobile-language-dropdown {
+            position: relative;
+            margin-top: 0.5rem;
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .mobile-language-dropdown.show {
+            display: block;
+        }
+        
+        .mobile-language-dropdown .language-option {
+            padding: 0.75rem 1rem;
+            color: #cbd5e1;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-language-dropdown .language-option:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #60a5fa;
+            border-left-color: #60a5fa;
+        }
+        
+        .mobile-language-dropdown .language-option.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            border-left-color: #60a5fa;
+        }
+        
         /* Main Content */
         .main-content {
             margin-top: 80px;
@@ -909,7 +1054,11 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .nav-links {
+            .hamburger-menu {
+                display: flex;
+            }
+            
+            .desktop-nav {
                 display: none;
             }
             
@@ -2091,7 +2240,16 @@
     <header class="header">
         <nav class="nav container">
             <a href="#" class="logo" data-i18n="title">🌊 인천 해양 갈등 지도</a>
-        <div style="display: flex; align-items: center; gap: 2rem">
+            
+            <!-- 햄버거 메뉴 버튼 -->
+            <button class="hamburger-menu" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- 데스크톱 네비게이션 -->
+            <div class="desktop-nav">
                 <ul class="nav-links">
             <li>
             <a href="#" onclick="showPage('map')" data-i18n="nav.home">지도</a>
@@ -2124,6 +2282,46 @@
                             🇨🇳 中文
                         </div>
             <div class="language-option" onclick="selectLanguage('es', 'Español')">
+                            🇪🇸 Español
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 모바일 드롭다운 메뉴 -->
+            <div id="mobileMenu" class="mobile-menu">
+                <ul class="mobile-nav-links">
+                    <li>
+                        <a href="#" onclick="showPage('map'); toggleMobileMenu();" data-i18n="nav.home">지도</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="showPage('dashboard'); toggleMobileMenu();" data-i18n="nav.dashboard">대시보드</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="showPage('followup'); toggleMobileMenu();" data-i18n="nav.followup">후속 평가</a>
+                    </li>
+                </ul>
+                <div class="mobile-language-selector">
+                    <button class="mobile-language-btn" onclick="toggleMobileLanguageDropdown()">
+                        🌐 한국어 ▼
+                    </button>
+                    <div id="mobileLanguageDropdown" class="mobile-language-dropdown">
+                        <div class="language-option active" onclick="selectLanguage('ko', '한국어'); toggleMobileMenu();">
+                            🇰🇷 한국어
+                        </div>
+                        <div class="language-option" onclick="selectLanguage('en', 'English'); toggleMobileMenu();">
+                            🇺🇸 English
+                        </div>
+                        <div class="language-option" onclick="selectLanguage('fr', 'Français'); toggleMobileMenu();">
+                            🇫🇷 Français
+                        </div>
+                        <div class="language-option" onclick="selectLanguage('ja', '日本語'); toggleMobileMenu();">
+                            🇯🇵 日本語
+                        </div>
+                        <div class="language-option" onclick="selectLanguage('zh', '中文'); toggleMobileMenu();">
+                            🇨🇳 中文
+                        </div>
+                        <div class="language-option" onclick="selectLanguage('es', 'Español'); toggleMobileMenu();">
                             🇪🇸 Español
                         </div>
                     </div>
@@ -9356,6 +9554,25 @@
         },
         };
         
+        // 모바일 메뉴 외부 클릭 시 닫기
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById("mobileMenu");
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            
+            if (mobileMenu && mobileMenu.classList.contains("show")) {
+                if (!mobileMenu.contains(event.target) && !hamburgerMenu.contains(event.target)) {
+                    mobileMenu.classList.remove("show");
+                    hamburgerMenu.classList.remove("active");
+                }
+            }
+        });
+        
+        // 페이지 로드 시 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            // 모바일 언어 버튼 초기 텍스트 설정
+            updateMobileLanguageButton('한국어');
+        });
+        
         // Translation helper function
         function t(key) {
             const keys = key.split('.');
@@ -9373,12 +9590,40 @@
         dropdown.classList.toggle("show");
         }
         
+        // 모바일 메뉴 토글 함수
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById("mobileMenu");
+            const hamburgerMenu = document.querySelector(".hamburger-menu");
+            
+            mobileMenu.classList.toggle("show");
+            hamburgerMenu.classList.toggle("active");
+        }
+        
+        // 모바일 언어 드롭다운 토글 함수
+        function toggleMobileLanguageDropdown() {
+            const dropdown = document.getElementById("mobileLanguageDropdown");
+            dropdown.classList.toggle("show");
+        }
+        
+        // 모바일 언어 선택 시 버튼 텍스트 업데이트
+        function updateMobileLanguageButton(name) {
+            const mobileLanguageBtn = document.querySelector(".mobile-language-btn");
+            if (mobileLanguageBtn) {
+                mobileLanguageBtn.innerHTML = `🌐 ${name} ▼`;
+            }
+        }
+        
         function selectLanguage(code, name) {
             currentLanguage = code;
             
-            // Update button text
+            // Update desktop button text
         const languageBtn = document.querySelector(".language-btn");
-            languageBtn.innerHTML = `🌐 ${name} ▼`;
+            if (languageBtn) {
+                languageBtn.innerHTML = `🌐 ${name} ▼`;
+            }
+            
+            // Update mobile button text
+            updateMobileLanguageButton(name);
             
             // Update active option
         document.querySelectorAll(".language-option").forEach((option) => {
@@ -9386,8 +9631,15 @@
             });
         event.target.classList.add("active");
             
-            // Close dropdown
-        document.getElementById("languageDropdown").classList.remove("show");
+            // Close dropdowns
+        const desktopDropdown = document.getElementById("languageDropdown");
+        const mobileDropdown = document.getElementById("mobileLanguageDropdown");
+            if (desktopDropdown) {
+                desktopDropdown.classList.remove("show");
+            }
+            if (mobileDropdown) {
+                mobileDropdown.classList.remove("show");
+            }
             
             // Translate all elements
             translatePage();
