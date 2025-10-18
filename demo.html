@@ -179,21 +179,6 @@
             flex-wrap: wrap;
         }
         
-        .search-box {
-            flex: 1;
-            min-width: 200px;
-            padding: 0.75rem;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: 8px;
-            background: rgba(30, 41, 59, 0.5);
-            color: #f8fafc;
-            font-size: 1rem;
-        }
-        
-        .search-box::placeholder {
-            color: #94a3b8;
-        }
-        
         .filter-buttons {
             display: flex;
             gap: 0.5rem;
@@ -2158,8 +2143,6 @@
                 
                 <!-- Controls -->
                 <div class="controls">
-          <input type="text" class="search-box" placeholder="" data-i18n-attr="placeholder:map.search"
-            id="searchInput" />
                     <div class="filter-buttons">
             <button class="filter-btn active" data-type="all" data-i18n="map.all">
                 전체
@@ -7581,43 +7564,6 @@
              });
          }
 
-                 // Search Function
-         function searchConflicts(query) {
-        const filtered = displayedConflicts.filter((c) => {
-                 const translated = getTranslatedConflict(c);
-          return (
-            translated.title.toLowerCase().includes(query.toLowerCase()) ||
-            translated.description
-              .toLowerCase()
-              .includes(query.toLowerCase()) ||
-            c.area.toLowerCase().includes(query.toLowerCase())
-          );
-        });
-
-        const container = document.getElementById("conflictList");
-        container.innerHTML = "";
-
-        filtered.forEach((conflict) => {
-                 const translatedConflict = getTranslatedConflict(conflict);
-          const card = document.createElement("div");
-          card.className = "conflict-card";
-                 card.onclick = () => showConflictDetail(translatedConflict);
-                 
-                 card.innerHTML = `
-                     <div class="conflict-type type-${conflict.type
-                     }">${getTypeName(conflict.type)}</div>
-                     <div class="conflict-title">${translatedConflict.title
-                     }</div>
-                     <div class="conflict-description">${translatedConflict.description
-                     }</div>
-                     <div class="conflict-status status-${conflict.status
-                     }">${getStatusName(conflict.status)}</div>
-                 `;
-                 
-                 container.appendChild(card);
-             });
-         }
-
                  // Event Listeners
       document.addEventListener("DOMContentLoaded", function () {
         console.log(
@@ -7648,13 +7594,6 @@
             this.classList.add("active");
                      filterConflicts(this.dataset.type);
                  });
-             });
-             
-             // Search input event
-        document
-          .getElementById("searchInput")
-          .addEventListener("input", function () {
-                 searchConflicts(this.value);
              });
              
              // Modal close events
