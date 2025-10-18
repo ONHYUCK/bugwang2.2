@@ -4963,7 +4963,7 @@
                                 <select id="commentStakeholder" class="form-select">
                                     <option value="">선택해주세요</option>
                                     ${conflict.stakeholders.map(s => `
-                                        <option value="${s.name}">${s.name} (${s.type})</option>
+                                        <option value="${s.nameKey || s.name || '이해관계자'}">${s.nameKey || s.name || '이해관계자'} (${s.type})</option>
                                     `).join('')}
                                     <option value="일반시민">일반시민</option>
                                     <option value="관심있는시민">관심있는시민</option>
