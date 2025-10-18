@@ -6213,60 +6213,99 @@
           },
              });
              
-             // Value Changes Chart
+             // Value Changes Chart - Enhanced with comprehensive value judgment data
         const valueChangesCtx = document
           .getElementById("valueChangesChart")
           .getContext("2d");
+             
+             // Generate comprehensive 6-month value judgment data with more dynamic values
              const valueChangesData = [
           {
             month: "2024-03",
-            environmental: 7.2,
-            economic: 6.1,
-            social: 8.3,
-            cultural: 5.9,
-            political: 6.7,
+            environmental: 6.2,
+            economic: 5.1,
+            housing: 7.8,
+            cultural: 4.9,
+            transportation: 5.3,
           },
           {
             month: "2024-04",
-            environmental: 7.5,
-            economic: 6.3,
-            social: 8.1,
-            cultural: 6.2,
-            political: 6.9,
+            environmental: 6.8,
+            economic: 5.7,
+            housing: 7.2,
+            cultural: 5.6,
+            transportation: 6.1,
           },
           {
             month: "2024-05",
-            environmental: 7.8,
-            economic: 6.8,
-            social: 7.9,
-            cultural: 6.5,
-            political: 7.2,
+            environmental: 7.5,
+            economic: 6.9,
+            housing: 6.8,
+            cultural: 6.3,
+            transportation: 7.2,
           },
           {
             month: "2024-06",
             environmental: 8.1,
-            economic: 7.1,
-            social: 7.6,
-            cultural: 6.8,
-            political: 7.5,
+            economic: 7.8,
+            housing: 6.2,
+            cultural: 7.1,
+            transportation: 8.0,
           },
           {
             month: "2024-07",
-            environmental: 8.3,
-            economic: 7.4,
-            social: 7.4,
-            cultural: 7.1,
-            political: 7.8,
+            environmental: 8.7,
+            economic: 8.4,
+            housing: 5.8,
+            cultural: 7.9,
+            transportation: 8.6,
           },
           {
             month: "2024-08",
-            environmental: 8.6,
-            economic: 7.8,
-            social: 7.2,
-            cultural: 7.4,
-            political: 8.1,
+            environmental: 9.2,
+            economic: 8.9,
+            housing: 5.4,
+            cultural: 8.5,
+            transportation: 9.1,
           },
              ];
+             
+             // Calculate the biggest change in values
+             const calculateBiggestChange = () => {
+                 const changes = {};
+                 const firstMonth = valueChangesData[0];
+                 const lastMonth = valueChangesData[valueChangesData.length - 1];
+                 
+                 changes.environmental = lastMonth.environmental - firstMonth.environmental;
+                 changes.economic = lastMonth.economic - firstMonth.economic;
+                 changes.housing = lastMonth.housing - firstMonth.housing;
+                 changes.cultural = lastMonth.cultural - firstMonth.cultural;
+                 changes.transportation = lastMonth.transportation - firstMonth.transportation;
+                 
+                 const biggestChange = Object.entries(changes).reduce((max, [key, value]) => 
+                     Math.abs(value) > Math.abs(max.value) ? {key, value} : max, 
+                     {key: 'environmental', value: 0}
+                 );
+                 
+                 return biggestChange;
+             };
+             
+             const biggestChange = calculateBiggestChange();
+             const changeLabels = {
+                 environmental: '환경',
+                 economic: '경제', 
+                 housing: '주거',
+                 cultural: '문화',
+                 transportation: '교통'
+             };
+             
+             const changeDescriptions = {
+                 environmental: '환경 정책 강화와 친환경 인프라 확충으로 환경 가치가 크게 상승했습니다.',
+                 economic: '지역 경제 활성화와 일자리 창출 정책으로 경제 가치가 급상승했습니다.',
+                 housing: '주거비 상승과 주택 공급 부족으로 주거 가치가 크게 하락했습니다.',
+                 cultural: '문화 시설 확충과 문화 행사 증가로 문화 가치가 급상승했습니다.',
+                 transportation: '대중교통 개선과 교통 인프라 확충으로 교통 가치가 급상승했습니다.'
+             };
              
              new Chart(valueChangesCtx, {
           type: "line",
@@ -6280,64 +6319,223 @@
                 label: "환경",
                 data: valueChangesData.map((d) => d.environmental),
                 borderColor: "#22c55e",
-                backgroundColor: "rgba(34, 197, 94, 0.1)",
-                             borderWidth: 2,
-                tension: 0.4,
+                backgroundColor: "rgba(34, 197, 94, 0.2)",
+                             borderWidth: 4,
+                tension: 0.6,
+                fill: true,
+                pointBackgroundColor: "#22c55e",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 3,
+                pointRadius: 8,
+                pointHoverRadius: 12,
+                pointHoverBackgroundColor: "#16a34a",
+                pointHoverBorderWidth: 4,
               },
               {
                 label: "경제",
                 data: valueChangesData.map((d) => d.economic),
-                borderColor: "#3b82f6",
-                backgroundColor: "rgba(59, 130, 246, 0.1)",
-                             borderWidth: 2,
-                tension: 0.4,
+                borderColor: "#f59e0b",
+                backgroundColor: "rgba(245, 158, 11, 0.2)",
+                             borderWidth: 4,
+                tension: 0.6,
+                fill: false,
+                pointBackgroundColor: "#f59e0b",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 3,
+                pointRadius: 7,
+                pointHoverRadius: 11,
+                pointHoverBackgroundColor: "#d97706",
+                pointHoverBorderWidth: 4,
               },
               {
-                label: "사회",
-                data: valueChangesData.map((d) => d.social),
-                borderColor: "#f97316",
-                backgroundColor: "rgba(249, 115, 22, 0.1)",
-                             borderWidth: 2,
-                tension: 0.4,
+                label: "주거",
+                data: valueChangesData.map((d) => d.housing),
+                borderColor: "#3b82f6",
+                backgroundColor: "rgba(59, 130, 246, 0.2)",
+                             borderWidth: 4,
+                tension: 0.6,
+                fill: false,
+                pointBackgroundColor: "#3b82f6",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 3,
+                pointRadius: 7,
+                pointHoverRadius: 11,
+                pointHoverBackgroundColor: "#2563eb",
+                pointHoverBorderWidth: 4,
               },
               {
                 label: "문화",
                 data: valueChangesData.map((d) => d.cultural),
-                borderColor: "#8b5cf6",
-                backgroundColor: "rgba(139, 92, 246, 0.1)",
-                             borderWidth: 2,
-                tension: 0.4,
+                borderColor: "#a855f7",
+                backgroundColor: "rgba(168, 85, 247, 0.2)",
+                             borderWidth: 4,
+                tension: 0.6,
+                fill: false,
+                pointBackgroundColor: "#a855f7",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 3,
+                pointRadius: 7,
+                pointHoverRadius: 11,
+                pointHoverBackgroundColor: "#9333ea",
+                pointHoverBorderWidth: 4,
               },
               {
                 label: "교통",
-                data: valueChangesData.map((d) => d.political),
+                data: valueChangesData.map((d) => d.transportation),
                 borderColor: "#ef4444",
-                backgroundColor: "rgba(239, 68, 68, 0.1)",
-                             borderWidth: 2,
-                tension: 0.4,
+                backgroundColor: "rgba(239, 68, 68, 0.2)",
+                             borderWidth: 4,
+                tension: 0.6,
+                fill: false,
+                pointBackgroundColor: "#ef4444",
+                pointBorderColor: "#ffffff",
+                pointBorderWidth: 3,
+                pointRadius: 7,
+                pointHoverRadius: 11,
+                pointHoverBackgroundColor: "#dc2626",
+                pointHoverBorderWidth: 4,
               },
             ],
                  },
                  options: {
                      responsive: true,
                      maintainAspectRatio: false,
+                     animation: {
+                         duration: 2000,
+                         easing: 'easeInOutQuart',
+                         delay: (context) => {
+                             return context.type === 'data' && context.mode === 'default' ? context.dataIndex * 200 : 0;
+                         }
+                     },
                      plugins: {
                          legend: {
-                labels: { color: "#f8fafc" },
+                position: "top",
+                labels: { 
+                    color: "#f8fafc",
+                    font: {
+                        size: 13,
+                        weight: '700'
+                    },
+                    padding: 20,
+                    usePointStyle: true,
+                    pointStyle: 'circle',
+                    generateLabels: function(chart) {
+                        const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                        const labels = original.call(this, chart);
+                        labels.forEach(label => {
+                            label.font = {
+                                size: 13,
+                                weight: '700'
+                            };
+                        });
+                        return labels;
+                    }
+                },
               },
+              tooltip: {
+                  backgroundColor: 'rgba(15, 23, 42, 0.98)',
+                  titleColor: '#f8fafc',
+                  bodyColor: '#f8fafc',
+                  borderColor: 'rgba(34, 197, 94, 0.5)',
+                  borderWidth: 2,
+                  cornerRadius: 12,
+                  displayColors: true,
+                  padding: 18,
+                  titleFont: {
+                      size: 15,
+                      weight: '700'
+                  },
+                  bodyFont: {
+                      size: 14,
+                      weight: '600'
+                  },
+                  callbacks: {
+                      title: function(context) {
+                          return context[0].label + ' 가치 변화';
+                      },
+                      label: function(context) {
+                          return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + '점';
+                      },
+                      afterLabel: function(context) {
+                          const prevIndex = context.dataIndex - 1;
+                          if (prevIndex >= 0) {
+                              const prevValue = context.dataset.data[prevIndex];
+                              const change = context.parsed.y - prevValue;
+                              const changeText = change > 0 ? `+${change.toFixed(1)}` : change.toFixed(1);
+                              return `변화: ${changeText}점`;
+                          }
+                          return '';
+                      },
+                      footer: function(context) {
+                          if (context[0].dataIndex === valueChangesData.length - 1) {
+                              const changeText = biggestChange.value > 0 ? `+${biggestChange.value.toFixed(1)}` : biggestChange.value.toFixed(1);
+                              return [
+                                  `📈 최대 변화: ${changeLabels[biggestChange.key]} (${changeText}점)`,
+                                  `💡 ${changeDescriptions[biggestChange.key]}`
+                              ];
+                          }
+                          return '';
+                      }
+                  }
+              }
                      },
                      scales: {
                          x: {
-                ticks: { color: "#f8fafc" },
-                grid: { color: "rgba(148, 163, 184, 0.2)" },
+                ticks: { 
+                    color: "#f8fafc",
+                    font: {
+                        size: 12,
+                        weight: '600'
+                    }
+                },
+                grid: { 
+                    color: "rgba(148, 163, 184, 0.3)",
+                    drawBorder: false,
+                    lineWidth: 1.5
+                },
+                border: {
+                    color: "rgba(148, 163, 184, 0.5)",
+                    width: 2
+                }
                          },
                          y: {
                              min: 0,
                              max: 10,
-                ticks: { color: "#f8fafc" },
-                grid: { color: "rgba(148, 163, 184, 0.2)" },
+                ticks: { 
+                    color: "#f8fafc",
+                    font: {
+                        size: 12,
+                        weight: '600'
+                    }
+                },
+                grid: { 
+                    color: "rgba(148, 163, 184, 0.3)",
+                    drawBorder: false,
+                    lineWidth: 1.5
+                },
+                border: {
+                    color: "rgba(148, 163, 184, 0.5)",
+                    width: 2
+                }
               },
             },
+            interaction: {
+                intersect: false,
+                mode: 'index'
+            },
+            elements: {
+                line: {
+                    borderWidth: 4,
+                    borderCapStyle: 'round',
+                    borderJoinStyle: 'round'
+                },
+                point: {
+                    hoverBorderWidth: 4
+                }
+            },
+            hover: {
+                animationDuration: 300
+            }
           },
              });
          }
