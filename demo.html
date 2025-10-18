@@ -1198,6 +1198,52 @@
               display: flex;
               gap: 0.75rem;
               margin-top: 1rem;
+              justify-content: flex-end;
+          }
+          
+          .char-count {
+              text-align: right;
+              font-size: 0.75rem;
+              color: #94a3b8;
+              margin-top: 0.25rem;
+          }
+          
+          .form-input, .form-textarea {
+              width: 100%;
+              padding: 0.75rem;
+              border: 1px solid rgba(148, 163, 184, 0.2);
+              border-radius: 6px;
+              background: rgba(15, 23, 42, 0.8);
+              color: #f8fafc;
+              font-size: 0.875rem;
+              font-family: inherit;
+          }
+          
+          .form-input:focus, .form-textarea:focus {
+              outline: none;
+              border-color: #60a5fa;
+              box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+          }
+          
+          .form-textarea {
+              resize: vertical;
+              min-height: 100px;
+          }
+          
+          .form-select {
+              width: 100%;
+              padding: 0.75rem;
+              border: 1px solid rgba(148, 163, 184, 0.2);
+              border-radius: 8px;
+              background: rgba(30, 41, 59, 0.8);
+              color: #f8fafc;
+              font-size: 1rem;
+          }
+          
+          .form-select:focus {
+              outline: none;
+              border-color: #60a5fa;
+              box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
           }
           
           .submit-comment-btn {
@@ -1234,9 +1280,38 @@
               color: #f8fafc;
           }
           
+          /* Community Styles */
+          .community-container {
+              background: rgba(15, 23, 42, 0.5);
+              border: 1px solid rgba(148, 163, 184, 0.2);
+              border-radius: 12px;
+              padding: 1.5rem;
+          }
+          
+          .community-header {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              margin-bottom: 1.5rem;
+              padding-bottom: 1rem;
+              border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+          }
+          
+          .community-stats {
+              display: flex;
+              gap: 1rem;
+          }
+          
+          .stat-item {
+              color: #cbd5e1;
+              font-size: 0.875rem;
+              font-weight: 500;
+          }
+          
           .comments-list {
               max-height: 400px;
               overflow-y: auto;
+              margin-bottom: 1rem;
           }
           
           .comment-item {
@@ -2094,22 +2169,49 @@
                      {
                          id: 1,
                          author: "환경지킴이",
-                         contentKey: 0,
+                         content: "강화도 갯벌은 생태계의 보고입니다. 매립으로 인한 생물 다양성 손실은 되돌릴 수 없습니다. 대안 개발 방안을 모색해야 합니다.",
                          stakeholder: "환경단체",
                          timestamp: "2024-01-15T14:30:00Z",
                          likes: 12,
-              liked: false,
+                         liked: false,
                      },
                      {
                          id: 2,
                          author: "강화도주민",
-                         contentKey: 1,
+                         content: "개발도 필요하지만 환경도 중요합니다. 양쪽을 모두 고려한 합리적인 방안이 나왔으면 좋겠습니다.",
                          stakeholder: "지역주민",
                          timestamp: "2024-01-16T09:15:00Z",
                          likes: 8,
-              liked: false,
-            },
-          ],
+                         liked: false,
+                     },
+                     {
+                         id: 3,
+                         author: "개발진행파",
+                         content: "지역 경제 발전을 위해서는 개발이 필요합니다. 환경 보호와 개발을 동시에 추진할 수 있는 방안을 찾아야 합니다.",
+                         stakeholder: "개발업체",
+                         timestamp: "2024-01-17T11:45:00Z",
+                         likes: 5,
+                         liked: false,
+                     },
+                     {
+                         id: 4,
+                         author: "생태학자김",
+                         content: "갯벌은 탄소 저장고 역할을 하며 기후변화 대응에 중요합니다. 단순한 경제적 이익보다 장기적 환경 가치를 고려해야 합니다.",
+                         stakeholder: "환경단체",
+                         timestamp: "2024-01-18T16:20:00Z",
+                         likes: 15,
+                         liked: false,
+                     },
+                     {
+                         id: 5,
+                         author: "일반시민",
+                         content: "정부와 기업, 시민이 함께 논의해서 최선의 해결책을 찾았으면 좋겠습니다. 투명한 의사결정 과정이 중요합니다.",
+                         stakeholder: "일반시민",
+                         timestamp: "2024-01-19T13:30:00Z",
+                         likes: 7,
+                         liked: false,
+                     }
+                 ],
                           },
             {
                 id: 2,
@@ -2167,22 +2269,40 @@
                      {
                          id: 1,
                          author: "영흥어부",
-                         contentKey: 0,
+                         content: "우리 어업권이 침해당하고 있습니다. 적절한 보상과 대체 어장이 필요합니다.",
                          stakeholder: "어업인",
                          timestamp: "2024-01-18T16:20:00Z",
                          likes: 15,
-              liked: false,
+                         liked: false,
                      },
                      {
                          id: 2,
                          author: "에너지전문가",
-                         contentKey: 1,
+                         content: "청정 에너지는 필요하지만 어업인의 생계도 보장되어야 합니다.",
                          stakeholder: "에너지업체",
                          timestamp: "2024-01-19T10:30:00Z",
                          likes: 6,
-              liked: false,
-            },
-          ],
+                         liked: false,
+                     },
+                     {
+                         id: 3,
+                         author: "바다사랑",
+                         content: "해상풍력은 좋지만 어업에 미치는 영향을 최소화해야 합니다. 어업인들의 의견을 더 들어봐야 합니다.",
+                         stakeholder: "환경단체",
+                         timestamp: "2024-01-20T14:15:00Z",
+                         likes: 9,
+                         liked: false,
+                     },
+                     {
+                         id: 4,
+                         author: "정부관계자",
+                         content: "에너지 전환 정책과 어업 보호를 모두 고려한 균형잡힌 정책이 필요합니다.",
+                         stakeholder: "중앙정부",
+                         timestamp: "2024-01-21T09:45:00Z",
+                         likes: 4,
+                         liked: false,
+                     }
+                 ],
             },
             {
                 id: 3,
@@ -2238,22 +2358,40 @@
                      {
                          id: 1,
                          author: "송도주민회",
-                         contentKey: 0,
+                         content: "기술 발전은 좋지만 우리 일자리가 위협받고 있습니다. 대책이 필요합니다.",
                          stakeholder: "송도 주민",
                          timestamp: "2024-01-20T15:45:00Z",
                          likes: 22,
-              liked: false,
+                         liked: false,
                      },
                      {
                          id: 2,
                          author: "항만개발팀",
-                         contentKey: 1,
+                         content: "자동화로 인한 일자리 감소는 우려되지만, 전체적인 물류 효율성 향상과 새로운 일자리 창출을 통해 균형을 맞추겠습니다.",
                          stakeholder: "항만공사",
                          timestamp: "2024-01-21T11:20:00Z",
                          likes: 9,
-              liked: false,
-            },
-          ],
+                         liked: false,
+                     },
+                     {
+                         id: 3,
+                         author: "물류전문가",
+                         content: "글로벌 경쟁력을 위해서는 자동화가 필수입니다. 노동자 재교육 프로그램을 통해 전환을 지원해야 합니다.",
+                         stakeholder: "물류업체",
+                         timestamp: "2024-01-22T13:30:00Z",
+                         likes: 6,
+                         liked: false,
+                     },
+                     {
+                         id: 4,
+                         author: "노동조합",
+                         content: "일자리 보장과 함께 자동화로 인한 이익을 노동자와 공유하는 방안이 필요합니다.",
+                         stakeholder: "항만노동자",
+                         timestamp: "2024-01-23T10:15:00Z",
+                         likes: 18,
+                         liked: false,
+                     }
+                 ],
             },
             {
                 id: 4,
@@ -2320,14 +2458,40 @@
                     {
                         id: 1,
                         author: "바다지킴이",
-              content:
-                "해양 생태계가 파괴될 수 있습니다. 대안 방안을 모색해야 합니다.",
+                        content: "해양 생태계가 파괴될 수 있습니다. 대안 방안을 모색해야 합니다.",
                         stakeholder: "해양환경단체",
                         timestamp: "2024-01-22T16:20:00Z",
                         likes: 18,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "항만개발자",
+                        content: "국가 물류 경쟁력 향상을 위해 신규 터미널이 필요합니다. 환경 보호와 개발을 동시에 추진하겠습니다.",
+                        stakeholder: "항만공사",
+                        timestamp: "2024-01-23T09:30:00Z",
+                        likes: 7,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "물류업계대표",
+                        content: "글로벌 물류 허브 구축을 위해서는 확장이 필수입니다. 환경 친화적 기술을 도입하겠습니다.",
+                        stakeholder: "물류업계",
+                        timestamp: "2024-01-24T11:45:00Z",
+                        likes: 5,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "해양생물학자",
+                        content: "해양 생물 서식지 보호를 위해 환경영향평가를 철저히 해야 합니다. 보상 생태계 조성도 고려해야 합니다.",
+                        stakeholder: "해양수산부",
+                        timestamp: "2024-01-25T14:20:00Z",
+                        likes: 12,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 5,
@@ -2396,14 +2560,40 @@
                     {
                         id: 1,
                         author: "문화지킴이",
-              content:
-                "문화유산은 한번 훼손되면 되돌릴 수 없습니다. 신중한 개발이 필요합니다.",
+                        content: "문화유산은 한번 훼손되면 되돌릴 수 없습니다. 신중한 개발이 필요합니다.",
                         stakeholder: "문화유산보호단체",
                         timestamp: "2024-01-24T15:30:00Z",
                         likes: 14,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "관광개발팀",
+                        content: "지역 경제 활성화를 위해 관광지 개발이 필요합니다. 문화유산 보호와 관광 개발의 균형을 맞추겠습니다.",
+                        stakeholder: "관광개발업체",
+                        timestamp: "2024-01-25T10:20:00Z",
+                        likes: 8,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "월미도상인",
+                        content: "관광객 증가로 매출이 늘어나길 기대합니다. 하지만 문화유산도 잘 보존되어야 합니다.",
+                        stakeholder: "지역상인",
+                        timestamp: "2024-01-26T14:15:00Z",
+                        likes: 6,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "문화재전문가",
+                        content: "문화재 보존과 관광 개발을 동시에 추진할 수 있는 방안이 있습니다. 전문가 자문을 받아 진행해야 합니다.",
+                        stakeholder: "문화재청",
+                        timestamp: "2024-01-27T11:30:00Z",
+                        likes: 10,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 6,
@@ -2471,14 +2661,40 @@
                     {
                         id: 1,
                         author: "통근족",
-              content:
-                "교통 혼잡이 심각합니다. 확장이 빨리 완료되면 좋겠습니다.",
+                        content: "교통 혼잡이 심각합니다. 확장이 빨리 완료되면 좋겠습니다.",
                         stakeholder: "통근자",
                         timestamp: "2024-01-26T18:30:00Z",
                         likes: 25,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "환경보호단",
+                        content: "대교 확장으로 인한 환경 영향이 우려됩니다. 친환경 기술을 도입해야 합니다.",
+                        stakeholder: "환경단체",
+                        timestamp: "2024-01-27T09:15:00Z",
+                        likes: 12,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "건설현장팀",
+                        content: "교통 흐름 개선을 위해 확장이 필요합니다. 환경 보호 기술을 적용하여 공사를 진행하겠습니다.",
+                        stakeholder: "건설업체",
+                        timestamp: "2024-01-28T11:20:00Z",
+                        likes: 7,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "교통정책담당",
+                        content: "지역 교통 개선과 환경 보호를 모두 고려한 종합적인 계획으로 진행하겠습니다.",
+                        stakeholder: "국토교통부",
+                        timestamp: "2024-01-29T14:45:00Z",
+                        likes: 9,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 7,
@@ -2549,9 +2765,36 @@
                         stakeholder: "지역주민",
                         timestamp: "2024-01-28T19:45:00Z",
                         likes: 11,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "해상공원개발팀",
+                        content: "지역 경제 활성화와 관광 발전을 위해 해상공원이 필요합니다. 환경 친화적으로 조성하겠습니다.",
+                        stakeholder: "관광개발업체",
+                        timestamp: "2024-01-29T10:30:00Z",
+                        likes: 8,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "바다환경보호단",
+                        content: "해상공원 조성 시 해양 생태계 보호를 최우선으로 고려해야 합니다. 생태계 복원 방안도 함께 마련해야 합니다.",
+                        stakeholder: "해양환경단체",
+                        timestamp: "2024-01-30T14:20:00Z",
+                        likes: 15,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "해양정책담당",
+                        content: "지속가능한 해양 관광을 위해 환경 보호와 개발의 균형을 맞추는 정책을 추진하겠습니다.",
+                        stakeholder: "해양수산부",
+                        timestamp: "2024-01-31T11:15:00Z",
+                        likes: 7,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 8,
@@ -2618,14 +2861,40 @@
                     {
                         id: 1,
                         author: "인천주민",
-              content:
-                "주거환경이 악화될 수 있습니다. 충분한 보상이 필요합니다.",
+                        content: "주거환경이 악화될 수 있습니다. 충분한 보상이 필요합니다.",
                         stakeholder: "지역주민",
                         timestamp: "2024-01-30T20:10:00Z",
                         likes: 16,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "물류확장팀",
+                        content: "글로벌 물류 허브 구축을 위해 확장이 필요합니다. 주민 보상과 환경 보호 방안을 함께 마련하겠습니다.",
+                        stakeholder: "물류업체",
+                        timestamp: "2024-01-31T09:45:00Z",
+                        likes: 6,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "환경보호협회",
+                        content: "물류단지 확장으로 인한 환경 영향이 우려됩니다. 친환경 물류 기술 도입과 환경 보전 방안이 필요합니다.",
+                        stakeholder: "환경단체",
+                        timestamp: "2024-02-01T13:20:00Z",
+                        likes: 12,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "지역발전담당",
+                        content: "지역 경제 발전과 주민 복지를 모두 고려한 균형잡힌 정책을 추진하겠습니다.",
+                        stakeholder: "지방정부",
+                        timestamp: "2024-02-02T10:30:00Z",
+                        likes: 8,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 9,
@@ -2692,14 +2961,40 @@
                     {
                         id: 1,
                         author: "문화지킴이",
-              content:
-                "문화유산은 우리의 소중한 자산입니다. 신중한 복원이 필요합니다.",
+                        content: "문화유산은 우리의 소중한 자산입니다. 신중한 복원이 필요합니다.",
                         stakeholder: "문화유산보호단체",
                         timestamp: "2024-02-01T16:30:00Z",
                         likes: 13,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "강화도개발팀",
+                        content: "지역 발전을 위해 개발이 필요하지만 문화유산도 잘 보존하겠습니다.",
+                        stakeholder: "개발업체",
+                        timestamp: "2024-02-02T10:15:00Z",
+                        likes: 7,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "강화도주민회",
+                        content: "문화유산 복원은 좋지만 우리 일상생활에 지장이 없어야 합니다.",
+                        stakeholder: "지역주민",
+                        timestamp: "2024-02-03T14:45:00Z",
+                        likes: 9,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "문화재전문가",
+                        content: "문화유산 보존과 지역 발전을 동시에 추진할 수 있는 방안을 모색하겠습니다.",
+                        stakeholder: "문화재청",
+                        timestamp: "2024-02-04T11:20:00Z",
+                        likes: 11,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 10,
@@ -2766,14 +3061,40 @@
                     {
                         id: 1,
                         author: "관광객",
-              content:
-                "아름다운 관광로가 생기면 좋겠습니다. 교통만 잘 해결되면 됩니다.",
+                        content: "아름다운 관광로가 생기면 좋겠습니다. 교통만 잘 해결되면 됩니다.",
                         stakeholder: "관광객",
                         timestamp: "2024-02-03T14:20:00Z",
                         likes: 9,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "관광개발팀",
+                        content: "지역 관광 활성화를 위해 관광로 조성이 필요합니다. 교통 혼잡 해결 방안도 함께 마련하겠습니다.",
+                        stakeholder: "관광개발업체",
+                        timestamp: "2024-02-04T09:30:00Z",
+                        likes: 6,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "인천주민회",
+                        content: "관광로 조성은 좋지만 일상 교통에 지장이 없어야 합니다. 대체 교통 수단도 마련해야 합니다.",
+                        stakeholder: "지역주민",
+                        timestamp: "2024-02-05T16:45:00Z",
+                        likes: 12,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "교통정책담당",
+                        content: "관광 발전과 교통 흐름 개선을 모두 고려한 종합적인 교통 계획을 수립하겠습니다.",
+                        stakeholder: "국토교통부",
+                        timestamp: "2024-02-06T11:20:00Z",
+                        likes: 8,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 11,
@@ -2840,14 +3161,40 @@
                     {
                         id: 1,
                         author: "교육자",
-              content:
-                "해양 생태계를 배울 수 있는 좋은 기회입니다. 신중하게 조성해주세요.",
+                        content: "해양 생태계를 배울 수 있는 좋은 기회입니다. 신중하게 조성해주세요.",
                         stakeholder: "교육기관",
                         timestamp: "2024-02-05T18:20:00Z",
                         likes: 7,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "바다환경보호단",
+                        content: "해양생태공원 조성 시 기존 생태계 보호를 최우선으로 고려해야 합니다. 생태계 복원 방안도 함께 마련해야 합니다.",
+                        stakeholder: "해양환경단체",
+                        timestamp: "2024-02-06T12:15:00Z",
+                        likes: 14,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "영흥도주민회",
+                        content: "생태공원이 생기면 좋겠지만 우리 일상생활에 지장이 없어야 합니다.",
+                        stakeholder: "지역주민",
+                        timestamp: "2024-02-07T15:30:00Z",
+                        likes: 8,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "해양정책담당",
+                        content: "지속가능한 해양 생태계 보전과 교육 기능을 모두 고려한 계획을 수립하겠습니다.",
+                        stakeholder: "해양수산부",
+                        timestamp: "2024-02-08T10:45:00Z",
+                        likes: 6,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 12,
@@ -2918,9 +3265,36 @@
                         stakeholder: "송도 주민",
                         timestamp: "2024-02-07T19:30:00Z",
                         likes: 12,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "교통개발팀",
+                        content: "송도 교통 흐름 개선을 위해 확장이 필요합니다. 환경 친화적 기술을 적용하여 공사를 진행하겠습니다.",
+                        stakeholder: "건설업체",
+                        timestamp: "2024-02-08T10:20:00Z",
+                        likes: 7,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "환경보호협회",
+                        content: "교통망 확장으로 인한 환경 영향이 우려됩니다. 친환경 교통 기술 도입과 환경 보전 방안이 필요합니다.",
+                        stakeholder: "환경단체",
+                        timestamp: "2024-02-09T14:45:00Z",
+                        likes: 15,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "교통정책담당",
+                        content: "교통 흐름 개선과 환경 보호를 모두 고려한 종합적인 교통 계획을 수립하겠습니다.",
+                        stakeholder: "국토교통부",
+                        timestamp: "2024-02-10T11:30:00Z",
+                        likes: 9,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 13,
@@ -2987,14 +3361,40 @@
                     {
                         id: 1,
                         author: "레저매니아",
-              content:
-                "해양 레저시설이 생기면 좋겠습니다. 환경도 보호하면서요.",
+                        content: "해양 레저시설이 생기면 좋겠습니다. 환경도 보호하면서요.",
                         stakeholder: "레저 이용객",
                         timestamp: "2024-02-09T20:15:00Z",
                         likes: 8,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "해양레저개발팀",
+                        content: "지역 관광 활성화와 레저 산업 발전을 위해 해양레저시설이 필요합니다. 환경 친화적으로 건설하겠습니다.",
+                        stakeholder: "레저업체",
+                        timestamp: "2024-02-10T11:30:00Z",
+                        likes: 6,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "바다환경보호단",
+                        content: "해양레저시설 건설 시 해양 생태계 보호를 최우선으로 고려해야 합니다. 환경영향평가를 철저히 해야 합니다.",
+                        stakeholder: "해양환경단체",
+                        timestamp: "2024-02-11T14:20:00Z",
+                        likes: 13,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "해양정책담당",
+                        content: "지속가능한 해양 레저 산업 발전을 위해 환경 보호와 개발의 균형을 맞추는 정책을 추진하겠습니다.",
+                        stakeholder: "해양수산부",
+                        timestamp: "2024-02-12T10:45:00Z",
+                        likes: 7,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 14,
@@ -3061,14 +3461,40 @@
                     {
                         id: 1,
                         author: "전통상인",
-              content:
-                "전통시장의 맛과 정취를 보존해야 합니다. 현대화도 필요하지만요.",
+                        content: "전통시장의 맛과 정취를 보존해야 합니다. 현대화도 필요하지만요.",
                         stakeholder: "전통시장 상인",
                         timestamp: "2024-02-11T17:45:00Z",
                         likes: 10,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "강화도개발팀",
+                        content: "지역 발전을 위해 현대화가 필요하지만 전통시장의 특색도 보존하겠습니다.",
+                        stakeholder: "개발업체",
+                        timestamp: "2024-02-12T10:20:00Z",
+                        likes: 5,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "문화유산보호단",
+                        content: "전통시장은 우리의 소중한 문화유산입니다. 보존과 현대화의 균형을 맞춰야 합니다.",
+                        stakeholder: "문화유산보호단체",
+                        timestamp: "2024-02-13T14:30:00Z",
+                        likes: 12,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "문화재전문가",
+                        content: "전통시장 보존과 현대적 기능을 모두 갖춘 복합 문화공간으로 발전시킬 수 있습니다.",
+                        stakeholder: "문화재청",
+                        timestamp: "2024-02-14T11:15:00Z",
+                        likes: 8,
+                        liked: false,
+                    }
+                ],
             },
             {
                 id: 15,
@@ -3135,14 +3561,40 @@
                     {
                         id: 1,
                         author: "항만노동자",
-              content:
-                "기술 발전은 좋지만 우리 일자리가 위협받고 있습니다. 대책이 필요합니다.",
+                        content: "기술 발전은 좋지만 우리 일자리가 위협받고 있습니다. 대책이 필요합니다.",
                         stakeholder: "항만노동자",
                         timestamp: "2024-02-13T19:30:00Z",
                         likes: 20,
-              liked: false,
-            },
-          ],
+                        liked: false,
+                    },
+                    {
+                        id: 2,
+                        author: "스마트항만개발팀",
+                        content: "글로벌 경쟁력을 위해 스마트항만 구축이 필요합니다. 노동자 재교육과 새로운 일자리 창출 방안을 마련하겠습니다.",
+                        stakeholder: "항만공사",
+                        timestamp: "2024-02-14T10:15:00Z",
+                        likes: 8,
+                        liked: false,
+                    },
+                    {
+                        id: 3,
+                        author: "기술혁신팀",
+                        content: "스마트 기술 도입으로 항만 효율성이 크게 향상됩니다. 노동자와 함께 성장하는 방안을 모색하겠습니다.",
+                        stakeholder: "기술업체",
+                        timestamp: "2024-02-15T14:20:00Z",
+                        likes: 6,
+                        liked: false,
+                    },
+                    {
+                        id: 4,
+                        author: "노동조합대표",
+                        content: "일자리 보장과 함께 기술 발전의 이익을 노동자와 공유하는 방안이 필요합니다.",
+                        stakeholder: "노동조합",
+                        timestamp: "2024-02-16T11:45:00Z",
+                        likes: 18,
+                        liked: false,
+                    }
+                ],
         },
                  ];
          
@@ -4482,6 +4934,52 @@
                          </div>
                      </div>
                  </div>
+                
+                <div class="detail-section">
+                    <h4>💬 시민 의견 참여</h4>
+                    <div class="community-container">
+                        <div class="community-header">
+                            <div class="community-stats">
+                                <span class="stat-item">댓글 <span id="commentCount">0</span>개의 의견</span>
+                                <span class="stat-item">총 <span id="participantCount">0</span>명 참여</span>
+                            </div>
+                            <button onclick="showCommentForm()" class="comment-btn">💬 의견 남기기</button>
+                        </div>
+                        
+                        <div id="commentForm" class="comment-form" style="display: none;">
+                            <div class="form-group">
+                                <label for="commentAuthor">닉네임:</label>
+                                <input type="text" id="commentAuthor" class="form-input" placeholder="닉네임을 입력해주세요" maxlength="20">
+                            </div>
+                            <div class="form-group">
+                                <label for="commentContent">의견:</label>
+                                <textarea id="commentContent" class="form-textarea" placeholder="이 갈등에 대한 의견을 자유롭게 남겨주세요..." rows="4" maxlength="500"></textarea>
+                                <div class="char-count">
+                                    <span id="charCount">0</span>/500
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="commentStakeholder">나의 입장:</label>
+                                <select id="commentStakeholder" class="form-select">
+                                    <option value="">선택해주세요</option>
+                                    ${conflict.stakeholders.map(s => `
+                                        <option value="${s.nameKey || s.name || '이해관계자'}">${s.nameKey || s.name || '이해관계자'} (${s.type})</option>
+                                    `).join('')}
+                                    <option value="일반시민">일반시민</option>
+                                    <option value="관심있는시민">관심있는시민</option>
+                                </select>
+                            </div>
+                            <div class="form-actions">
+                                <button onclick="submitComment(${conflict.id})" class="submit-comment-btn">의견 등록</button>
+                                <button onclick="hideCommentForm()" class="cancel-btn">취소</button>
+                            </div>
+                        </div>
+                        
+                        <div id="commentsList" class="comments-list">
+                            <!-- Comments will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
             `;
             
         console.log("Showing modal...");
